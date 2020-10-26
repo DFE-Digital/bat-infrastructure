@@ -1,0 +1,39 @@
+name: Deploy Prometheus & Grafana
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment to deploy to qa or production
+        required: true
+        default: production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout
+      
+      - name: Setup Terraform v0.13.3
+        uses: hashicorp/setup-terraform@v1.2.0
+        with:
+          terraform_version: 0.13.3
+      
+      - name: Terraform init, plan & apply
+        run: |
+          terraform init -backend-config workspace-variables/backend_${TF_VAR_monitoring_env}.tfvars
+          terraform plan -out monitoring_tfplan
+          terraform apply "monitoring_tfplan"
+        env:
+          ARM_ACCESS_KEY: ${{ secrets[format('TERRAFORM_STATE_ACCESS_KEY_{0}', github.event.inputs.environment)] }}
+          TF_VAR_paas_user: ${{ secrets[format('CF_USER_{0}', github.event.inputs.environment)] }}
+          TF_VAR_paas_password: ${{ secrets[format('CF_PASSWORD_{0}', github.event.inputs.environment)] }}
+          TF_VAR_paas_sso_code: ''
+          TF_VAR_monitoring_env: ${{ github.event.inputs.environment }}
+          TF_VAR_paas_exporter_username: ${{ secrets.CF_SPACE_AUDITOR_USER }}
+          TF_VAR_paas_exporter_password: ${{ secrets.CF_SPACE_AUDITOR_PASSWORD }}
+          TF_VAR_grafana_google_client_id: ${{ secrets.GRAFANA_GOOGLE_CLIENT_ID }}
+          TF_VAR_grafana_google_client_secret: ${{ secrets.GRAFANA_GOOGLE_CLIENT_SECRET }}
+          TF_VAR_grafana_admin_password: ${{ secrets.GRAFANA_ADMIN_PASSWORD }}
