@@ -24,4 +24,5 @@ module prometheus_all {
   grafana_admin_password = var.grafana_admin_password
 
   alertmanager_config = file("./config/alert-manager.yml")
+  alert_rules         = file("./config/alert.rules")
 }
