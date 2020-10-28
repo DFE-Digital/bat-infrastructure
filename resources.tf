@@ -17,7 +17,7 @@ module prometheus_all {
   }
 
   grafana_config = {
-    dashboard_directory  = "./files"
+    dashboard_directory  = "./grafana_dashboards"
     google_client_id     = var.grafana_google_client_id
     google_client_secret = var.grafana_google_client_secret
   }
