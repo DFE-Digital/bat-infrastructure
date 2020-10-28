@@ -1,7 +1,7 @@
 module prometheus_all {
   source = "git::https://github.com/DFE-Digital/bat-platform-building-blocks.git//terraform/modules/prometheus_all?ref=monitoring-terraform-0_13"
 
-  enabled_modules = ["paas_prometheus_exporter", "prometheus", "grafana"]
+  enabled_modules = ["paas_prometheus_exporter", "prometheus", "grafana", "alertmanager"]
 
   paas_user     = var.paas_user
   paas_password = var.paas_password
@@ -22,4 +22,6 @@ module prometheus_all {
     google_client_secret = var.grafana_google_client_secret
   }
   grafana_admin_password = var.grafana_admin_password
+
+  alertmanager_config = file("./config/alert-manager.yml")
 }
