@@ -15,7 +15,6 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1,
   "links": [],
   "panels": [
     {
@@ -24,25 +23,29 @@
       "cacheTimeout": null,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus-bat",
+      "datasource": "Prometheus-bat-qa",
+      "description": "Memory (bytes)",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
-        "w": 10,
+        "h": 8,
+        "w": 24,
         "x": 0,
         "y": 0
       },
       "hiddenSeries": false,
-      "id": 6,
+      "id": 4,
+      "interval": "",
       "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -62,7 +65,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(requests[1m])",
+          "expr": "memory_bytes{app=\"find-qa\"}",
+          "intervalFactor": 10,
           "refId": "A"
         }
       ],
@@ -70,7 +74,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Requests",
+      "title": "Memory (bytes)",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -86,9 +90,9 @@
       },
       "yaxes": [
         {
-          "format": "reqps",
+          "format": "decbytes",
           "label": null,
-          "logBase": 10,
+          "logBase": 1,
           "max": null,
           "min": null,
           "show": true
@@ -96,7 +100,7 @@
         {
           "format": "short",
           "label": null,
-          "logBase": 10,
+          "logBase": 1,
           "max": null,
           "min": null,
           "show": true
@@ -112,132 +116,45 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus-bat",
-      "description": "find-qa - memory utilization",
-      "fill": 1,
+      "datasource": "Prometheus-bat-qa",
+      "decimals": null,
+      "description": "find-prod CPU Percentage",
+      "fill": 2,
       "fillGradient": 0,
       "gridPos": {
-        "h": 6,
-        "w": 10,
+        "h": 7,
+        "w": 24,
         "x": 0,
-        "y": 7
+        "y": 8
       },
       "hiddenSeries": false,
-      "id": 4,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "avg(memory_bytes{app=\"find-qa\"})",
-          "refId": "A"
-        },
-        {
-          "expr": "min(memory_bytes{app=\"find-qa\"})",
-          "refId": "B"
-        },
-        {
-          "expr": "max(memory_bytes{app=\"find-qa\"})",
-          "refId": "C"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Memory",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "prometheus-bat",
-      "description": "",
-      "fill": 1,
-      "fillGradient": 10,
-      "gridPos": {
-        "h": 9,
-        "w": 10,
-        "x": 0,
-        "y": 13
-      },
-      "hiddenSeries": false,
+      "hideTimeOverride": false,
       "id": 2,
+      "interval": "10s",
       "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
         "min": false,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
-      "linewidth": 1,
+      "linewidth": 2,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "dataLinks": [
+          {
+            "title": "",
+            "url": ""
+          }
+        ]
       },
       "percentage": false,
-      "pluginVersion": "6.5.1",
       "pointradius": 2,
-      "points": false,
+      "points": true,
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
@@ -245,16 +162,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "avg(cpu{app=\"find-qa\"}) ",
+          "expr": "cpu{app=\"find-qa\"}",
           "refId": "A"
-        },
-        {
-          "expr": "min(cpu{app=\"find-qa\"}) ",
-          "refId": "B"
-        },
-        {
-          "expr": "max(cpu{app=\"find-qa\"}) ",
-          "refId": "C"
         }
       ],
       "thresholds": [],
@@ -270,13 +179,12 @@
         }
       ],
       "timeShift": null,
-      "title": "CPU (find-qa)",
+      "title": "CPU %",
       "tooltip": {
         "shared": true,
         "sort": 0,
         "value_type": "individual"
       },
-      "transparent": true,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -287,8 +195,97 @@
       },
       "yaxes": [
         {
-          "decimals": null,
+          "format": "percent",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
           "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus-bat-qa",
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "hiddenSeries": false,
+      "id": 6,
+      "interval": "",
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "memory_utilization{app=\"find-qa\"}",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Memory %",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "percent",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -317,25 +314,16 @@
     "list": []
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
-      "5s",
-      "10s",
-      "30s",
-      "1m",
-      "5m",
-      "15m",
-      "30m",
-      "1h",
-      "2h",
-      "1d"
+      "5s"
     ]
   },
-  "timezone": "",
-  "title": "FIND-QA",
-  "uid": "wmJ_O5cGz",
-  "version": 4
+  "timezone": "browser",
+  "title": "QA",
+  "uid": "j52YwytGz",
+  "version": 1
 }
