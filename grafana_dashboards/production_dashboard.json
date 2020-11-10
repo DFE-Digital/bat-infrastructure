@@ -23,7 +23,7 @@
       "cacheTimeout": null,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus-bat",
+      "datasource": "Prometheus",
       "description": "Memory (bytes)",
       "fill": 1,
       "fillGradient": 0,
@@ -115,7 +115,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus-bat",
+      "datasource": "Prometheus",
       "decimals": null,
       "description": "find-prod CPU Percentage",
       "fill": 2,
@@ -163,9 +163,6 @@
       "targets": [
         {
           "expr": "cpu{app=\"find-prod\"}",
-          "format": "time_series",
-          "instant": false,
-          "intervalFactor": 1,
           "refId": "A"
         }
       ],
@@ -224,7 +221,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus-bat",
+      "datasource": "Prometheus",
       "description": "",
       "fill": 1,
       "fillGradient": 0,
@@ -312,7 +309,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus-bat",
+      "datasource": "Prometheus",
       "description": "Requests/sec",
       "fill": 1,
       "fillGradient": 0,
@@ -324,7 +321,7 @@
       },
       "hiddenSeries": false,
       "id": 8,
-      "interval": "",
+      "interval": "1s",
       "legend": {
         "avg": true,
         "current": true,
@@ -350,9 +347,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(requests{app=\"find-prod\"}[30s])",
-          "format": "time_series",
-          "intervalFactor": 10,
+          "expr": "rate(requests{app=\"find-prod\"}[1m])",
+          "intervalFactor": 1,
           "refId": "A"
         }
       ],
@@ -402,7 +398,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus-bat",
+      "datasource": "Prometheus",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -413,6 +409,7 @@
       },
       "hiddenSeries": false,
       "id": 10,
+      "interval": "1s",
       "legend": {
         "avg": true,
         "current": true,
@@ -438,7 +435,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(response_time_sum{app=\"find-prod\"}[30s])",
+          "expr": "rate(response_time_sum{app=\"find-prod\"}[1m])",
           "refId": "A"
         }
       ],
@@ -502,5 +499,5 @@
   "timezone": "browser",
   "title": "Production",
   "uid": "j52YwytGz",
-  "version": 1
+  "version": 3
 }
