@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: Environment to deploy to qa or production
+        description: Environment to deploy, qa or prod
         required: true
-        default: production
+        default: prod
 
 jobs:
   deploy:

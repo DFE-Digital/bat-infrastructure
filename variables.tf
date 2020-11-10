@@ -2,7 +2,7 @@ variable paas_user {}
 
 variable paas_password {}
 
-variable paas_sso_code {}
+variable paas_sso_code { default = "" }
 
 variable paas_exporter_username {}
 
@@ -17,12 +17,7 @@ variable grafana_google_client_secret {}
 variable monitoring_env {}
 
 locals {
-  paas_api_url        = "https://api.london.cloud.service.gov.uk"
-  monitoring_org_name = "bat"
-  space_name = {
-    qa         = "qa"
-    production = "prod"
-    prod       = "prod"
-  }
-  monitoring_space_name = "bat-${local.space_name[var.monitoring_env]}"
+  paas_api_url             = "https://api.london.cloud.service.gov.uk"
+  monitoring_space_name    = "bat-${var.monitoring_env}"
+  monitoring_instance_name = var.monitoring_env == "prod" ? "bat" : "bat-${var.monitoring_env}"
 }
