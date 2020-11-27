@@ -16,3 +16,19 @@ Useful in scenarios when there is a need to selectively deploy to environments d
  - run: echo ${{ steps.select-environments.outputs.environments }}
 ```
 Used in: [Find](https://github.com/DFE-Digital/find-teacher-training/blob/master/.github/workflows/deploy.yml#L29), [Publish](https://github.com/DFE-Digital/publish-teacher-training/blob/master/.github/workflows/deploy.yml#L29) & [Teacher Training API](https://github.com/DFE-Digital/teacher-training-api/blob/master/.github/workflows/deploy.yml#L29)
+
+## Setup Cloud Foundry CLI
+Installs the Cloud Foundry CLI and logs the specified user into `CF_SPACE_NAME`.
+### Usage
+```yml
+ - uses: DFE-Digital/bat-infrastructure/actions/setup-cf-cli@main
+   with:
+     CF_USERNAME: ${{ secrets.CF_USERNAME }}
+     CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+     CF_SPACE_NAME: bat-qa # required
+     # Optional inputs
+     CF_CLI_VERSION: v7 # default v7, allowed values: v6 or v7
+     CF_ORG_NAME: dfe-teacher-services # default
+     CF_API_URL:  https://api.london.cloud.service.gov.uk # default
+     INSTALL_CONDUIT: true # default: false
+```
