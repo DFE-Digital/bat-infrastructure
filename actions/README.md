@@ -32,3 +32,22 @@ Installs the Cloud Foundry CLI and logs the specified user into `CF_SPACE_NAME`.
      CF_API_URL:  https://api.london.cloud.service.gov.uk # default
      INSTALL_CONDUIT: true # default: false
 ```
+## Terraform
+Installs the required version of terraform cli, downloads `APP_SECRETS` yml file and runs init, plan and apply.
+### Usage
+```yml
+- uses: DFE-Digital/bat-infrastructure/actions/terraform@main
+  with:
+    # required input
+    DEPLOY_ENV:  ${{ env.DEPLOY_ENV }}
+    # optional inputs, default values are mentioned here
+    VERSION: 0.13.5
+    APP_SECRETS: ${{ secrets[format('APP_SECRETS_{0}', env.DEPLOY_ENV)] }}
+    TERRAFORM_DIRECTORY: terraform # relative to the root of repository
+    VARS_DIRECTORY: workspace_variables # relative to TERRAFORM_DIRECTORY
+    BACKEND_CONFIG: workspace_variables/${{ env.DEPLOY_ENV }}_backend.tfvars # relative to TERRAFORM_DIRECTORY
+    VARS_FILE:      workspace_variables/${{ env.DEPLOY_ENV }}.tfvars # relative to TERRAFORM_DIRECTORY
+  env: # required environment variables for the terraform configuration
+    ARM_ACCESS_KEY: ${{ secrets.TERRAFORM_STATE_ACCESS_KEY }}
+    ...
+```

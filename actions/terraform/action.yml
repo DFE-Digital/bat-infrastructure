@@ -1,0 +1,80 @@
+name: Setup the Terraform CLI
+description: Step to install the terraform cli and run terraform steps
+inputs:
+  VERSION:
+    description: Version of the terraform cli to use, https://releases.hashicorp.com/terraform/
+    required: false
+    default: 0.13.5
+  TERRAFORM_DIRECTORY:
+    description: Directory relative to the $GITHUB_WORKSPACE folder where terraform code is located.
+    required: false
+    default: terraform
+  DEPLOY_ENV:
+    description: Environment to deploy qa, staging or production
+    required: true
+  VARS_DIRECTORY:
+    description: Directory relative to TERRAFORM_DIRECTORY where tfvars files are located
+    required: false
+    default: workspace_variables
+  BACKEND_CONFIG:
+    description: File containing the backend configuration, relative to TERRAFORM_DIRECTORY
+    required: false
+  VARS_FILE:
+    description: Terraform variables file to to applied to the configuration, relative to TERRAFORM_DIRECTORY
+    required: false
+  APP_SECRETS:
+    description: base64 encoded yaml app_secrets, will be downloaded inside VARS_DIRECTORY
+    required: false
+runs:
+  using: composite
+  steps: 
+    - name : Install terraform cli
+      shell: bash
+      env:
+        DOWNLOAD_URL: https://releases.hashicorp.com/terraform/${{ inputs.VERSION }}/terraform_${{ inputs.VERSION }}_linux_amd64.zip
+      run: |
+        echo "::group:: Download terraform ${{ inputs.VERSION }}"
+        wget -qO terraform.zip ${DOWNLOAD_URL}
+        sudo unzip -o terraform.zip -d /usr/local/bin
+        terraform version
+        echo "::endgroup::"
+
+    - name: Set environment variables
+      shell: bash
+      id: set-environment-variables
+      working-directory: ${{ inputs.TERRAFORM_DIRECTORY }}/${{ inputs.VARS_DIRECTORY }}
+      run: |
+        if [ "${{ inputs.APP_SECRETS }}" != "" ]
+        then
+          echo "::group:: Download app_secrets.yml to ${{ inputs.TERRAFORM_DIRECTORY }}/${{ inputs.VARS_DIRECTORY }}"
+          echo $APP_SECRETS | base64 -d >> app_secrets.yml
+          echo "::set-output name=app_secrets_file::${{ inputs.VARS_DIRECTORY }}/app_secrets.yml"
+          echo "::endgroup::"
+        fi
+        
+        echo "::group:: Set environment variables"
+        echo "BACKEND_CONFIG=${BACKEND_CONFIG}" >> $GITHUB_ENV
+        echo "VARS_FILE=${VARS_FILE}" >> $GITHUB_ENV
+        echo "::endgroup::"
+      env:
+        APP_SECRETS:    ${{ inputs.APP_SECRETS }}
+        VARS_FILE:      ${{ inputs.VARS_FILE || format('{0}/{1}.tfvars', inputs.VARS_DIRECTORY, inputs.DEPLOY_ENV) }}
+        BACKEND_CONFIG: ${{ inputs.BACKEND_CONFIG || format('{0}/{1}_backend.tfvars', inputs.VARS_DIRECTORY, inputs.DEPLOY_ENV) }}
+
+    - name: Terraform init, plan & apply
+      shell: bash
+      working-directory: ${{ inputs.TERRAFORM_DIRECTORY }}
+      env:
+        TF_VAR_paas_app_secrets_file: ${{ steps.set-environment-variables.outputs.app_secrets_file }}
+      run: |
+        echo "::group:: Terraform Init"
+        terraform init -backend-config=${{ env.BACKEND_CONFIG }}
+        echo "::endgroup::"
+        
+        echo "::group:: Terraform Plan"
+        terraform plan -var-file ${{ env.VARS_FILE }} -out tfplan
+        echo "::endgroup::"
+
+        echo "::group:: Terraform Apply"
+        terraform apply -auto-approve -input=false "tfplan"
+        echo "::endgroup::"
