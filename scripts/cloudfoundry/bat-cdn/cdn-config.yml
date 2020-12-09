@@ -9,6 +9,7 @@ qa:
     - qa.register-trainee-teachers.education.gov.uk
     - qa.api.publish-teacher-training-courses.service.gov.uk
     - qa.publish-teacher-training-courses.service.gov.uk
+    - pen.register-trainee-teachers.education.gov.uk
 staging:
   headers: *headers
   domain:
