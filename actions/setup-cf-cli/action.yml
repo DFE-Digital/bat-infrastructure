@@ -13,7 +13,7 @@ inputs:
   CF_ORG_NAME:
     description: Name of the PaaS organisation 
     required: false
-    default: dfe-teacher-services
+    default: dfe
   CF_API_URL:
     description: PaaS API endpoint, default https://api.london.cloud.service.gov.uk
     required: false
