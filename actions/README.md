@@ -11,7 +11,7 @@ Useful in scenarios when there is a need to selectively deploy to environments d
    uses: DFE-Digital/bat-infrastructure/actions/prepare-environment-matrix@main
    # Optional inputs
    with:
-     available-environments: qa, staging, production # this is the default value
+     available-environments: qa, staging, production, sandbox # this is the default value
  # Use the output value in a different step
  - run: echo ${{ steps.select-environments.outputs.environments }}
 ```
