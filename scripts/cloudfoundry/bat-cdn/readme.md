@@ -27,3 +27,15 @@ The supplied argument (ARVG) represents the intended target environment. To run 
 `bat-cdn.rb prod`
 
 Running any of the above will print out the desired `cf update <service_name>` command along with the newly updated custom domain. The output can then be executed from the shell, while logged into Cloudfoundry.
+
+#AWS endpoint
+CIP needs to configure our hostname entries as CNAME to point to the following AWS addresses:-
+
+QA
+CNAME => d1g6p51l52so6s.cloudfront.net
+
+STAGING
+CNAME => d2jkti130squc1.cloudfront.net
+
+PRODUCTION
+CNAME => d2jkti130squc1.cloudfront.net
