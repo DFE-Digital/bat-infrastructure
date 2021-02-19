@@ -26,3 +26,4 @@ prod:
     - sandbox.publish-teacher-training-courses.service.gov.uk
     - sandbox.register-trainee-teachers.education.gov.uk
     - www.publish-teacher-training-courses.service.gov.uk
+    - api.publish-teacher-training-courses.service.gov.uk
