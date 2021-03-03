@@ -16,4 +16,6 @@ module prometheus_all {
 
   alertmanager_config = file("./config/alert-manager.yml")
   alert_rules         = file("./config/alert.rules")
+
+  influxdb_service_plan = local.influxdb_service_plan
 }
