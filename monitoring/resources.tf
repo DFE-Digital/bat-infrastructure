@@ -2,9 +2,9 @@ module prometheus_all {
   source = "git::https://github.com/DFE-Digital/cf-monitoring//prometheus_all"
 
   enabled_modules          = ["paas_prometheus_exporter", "prometheus", "grafana", "influxdb", "alertmanager"]
-  monitoring_instance_name = local.monitoring_instance_name
+  monitoring_instance_name = var.monitoring_instance_name
   monitoring_org_name      = data.cloudfoundry_org.dfe.name
-  monitoring_space_name    = local.monitoring_space_name
+  monitoring_space_name    = var.monitoring_space_name
 
   paas_exporter_username = var.paas_exporter_username
   paas_exporter_password = var.paas_exporter_password
@@ -17,5 +17,5 @@ module prometheus_all {
   alertmanager_config = file("./config/alert-manager.yml")
   alert_rules         = file("./config/alert.rules")
 
-  influxdb_service_plan = local.influxdb_service_plan
+  influxdb_service_plan = var.influxdb_service_plan
 }
