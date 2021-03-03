@@ -3,7 +3,7 @@ data cloudfoundry_org dfe {
 }
 
 data cloudfoundry_space monitoring {
-  name = local.monitoring_space_name
+  name = var.monitoring_space_name
   org  = data.cloudfoundry_org.dfe.id
 }
 
