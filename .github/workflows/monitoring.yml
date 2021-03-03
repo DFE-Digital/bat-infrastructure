@@ -24,7 +24,7 @@ jobs:
       - name: Terraform init, plan & apply
         run: |
           terraform init -backend-config workspace-variables/backend_${TF_VAR_monitoring_env}.tfvars
-          terraform plan -out monitoring_tfplan
+          terraform plan -var-file workspace-variables/${TF_VAR_monitoring_env}.tfvars -out monitoring_tfplan
           terraform apply "monitoring_tfplan"
         working-directory: monitoring
         env:

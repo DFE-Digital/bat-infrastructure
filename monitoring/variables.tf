@@ -14,10 +14,12 @@ variable grafana_google_client_id {}
 
 variable grafana_google_client_secret {}
 
-variable monitoring_env {}
+variable monitoring_space_name {}
+
+variable monitoring_instance_name {}
+
+variable influxdb_service_plan {}
 
 locals {
-  paas_api_url             = "https://api.london.cloud.service.gov.uk"
-  monitoring_space_name    = "bat-${var.monitoring_env}"
-  monitoring_instance_name = var.monitoring_env == "prod" ? "bat" : "bat-${var.monitoring_env}"
+  paas_api_url = "https://api.london.cloud.service.gov.uk"
 }
