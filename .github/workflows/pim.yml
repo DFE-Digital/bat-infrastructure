@@ -1,0 +1,28 @@
+name: 'Pims'
+
+on:
+  push:
+    branches:
+      - spike-approver
+
+jobs:
+
+  CF:
+    runs-on: ubuntu-latest
+    environment:
+      name: Test
+    steps:
+      - uses: DFE-Digital/github-actions/setup-cf-cli@master
+        with:
+          CF_USERNAME: ${{ secrets.CF_USER_QA }}
+          CF_PASSWORD: ${{ secrets.CF_PASSWORD_QA }}
+          CF_SPACE_NAME: bat-qa
+          CF_ORG_NAME: dfe
+          CF_API_URL:  https://api.london.cloud.service.gov.uk
+          INSTALL_CONDUIT: false
+
+      - name: Elevate user
+        run: |
+          cf set-space-role 117094526917760827376 dfe "${{ env.CF_SPACE_NAME }}" SpaceManager
+        env:
+          CF_SPACE_NAME: "bat-qa"
