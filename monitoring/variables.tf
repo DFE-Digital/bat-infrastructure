@@ -20,6 +20,9 @@ variable monitoring_instance_name {}
 
 variable influxdb_service_plan {}
 
+variable alertmanager_slack_url {}
+
 locals {
-  paas_api_url = "https://api.london.cloud.service.gov.uk"
+  paas_api_url               = "https://api.london.cloud.service.gov.uk"
+  alertmanager_slack_channel = "twd_bat_devops"
 }
