@@ -46,3 +46,19 @@ groups:
       app:         ${app}
       environment: production
 %{ endfor ~}
+
+- name: App Crashes
+  rules:
+%{ for app in apps ~}  
+  - alert: App-Crash-${app}
+    expr: rate(crash{app=~"${app}"}[1m])*60 > 1
+    for: 5m
+    annotations:
+      summary:     Atleast one instance of ${app} has crashed
+      dashboard:   ${grafana_dashboard_url}
+      description: Atleast one instance of ${app} has crashed
+    labels:
+      severity:    high
+      app:         ${app}
+      environment: production
+%{ endfor ~}
