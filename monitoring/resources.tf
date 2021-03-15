@@ -14,8 +14,7 @@ module prometheus_all {
   grafana_google_client_secret = var.grafana_google_client_secret
   grafana_json_dashboards      = [file("./grafana_dashboards/production_dashboard.json"), file("./grafana_dashboards/qa_dashboard.json")]
 
-  alertmanager_config = file("./config/alert-manager.yml")
-  alert_rules         = file("./config/alert.rules")
+  alert_rules = file("./config/alert.rules")
 
   influxdb_service_plan = var.influxdb_service_plan
 }
