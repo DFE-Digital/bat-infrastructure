@@ -1,16 +1,32 @@
 groups:
-- name: High-CPU
+- name: High CPU
   rules:
 %{ for app in apps ~}
   - alert: High-CPU-${app}
-    expr: avg by ( app ) (cpu{app=~"${app}"}) > 1
+    expr: avg by ( app ) (cpu{app=~"${app}"}) > 50
     for: 5m
     annotations:
-      summary: ${app} High CPU Alert
-      description: "CPU usage of at least 1% for more than 5 minutes (current value: {{ $value }})"
-      dashboard: https://grafana-bat.london.cloudapps.digital/d/eF19g4RZx/cf-apps?orgId=1&refresh=10s
+      summary:     ${app} High CPU Alert
+      dashboard:   ${grafana_dashboard_url}
+      description: "CPU usage of at least 50% for more than 5 minutes (current value: {{ $value }})"
     labels:
       environment: production
-      severity: high
-      app: ${app}
+      severity:    high
+      app:         ${app}
+%{ endfor ~}
+
+- name: Memory Utilisation
+  rules:
+%{ for app in apps ~}  
+  - alert: High-Memory-Utilisation-${app}
+    expr: avg by ( app ) (memory_utilization{app=~"${app}"}) > 60
+    for: 5m
+    annotations:
+      summary:     ${app} high memory utilization
+      dashboard:   ${grafana_dashboard_url}
+      description: "Memory utilization at least 60% for more than 5 minutes (current value: {{ $value }})"
+    labels:
+      severity:    high
+      app:         ${app}
+      environment: production
 %{ endfor ~}
