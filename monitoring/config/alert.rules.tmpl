@@ -30,3 +30,19 @@ groups:
       app:         ${app}
       environment: production
 %{ endfor ~}
+
+- name: Disk Utilisation
+  rules:
+%{ for app in apps ~}  
+  - alert: High-Disk-Utilisation-${app}
+    expr: avg by ( app ) ( disk_utilization{ app=~"${app}" }) > 60
+    for: 5m
+    annotations:
+      summary:     ${app} high disk utilization
+      dashboard:   ${grafana_dashboard_url}
+      description: "Disk utilization is at least 60% for more than 5 minutes (current value: {{ $value }})"
+    labels:
+      severity:    high
+      app:         ${app}
+      environment: production
+%{ endfor ~}
