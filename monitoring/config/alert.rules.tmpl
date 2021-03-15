@@ -62,3 +62,19 @@ groups:
       app:         ${app}
       environment: production
 %{ endfor ~}
+
+- name: Elevated Request Failures
+  rules:
+%{ for app in apps ~}  
+  - alert: Request-Failures-${app}
+    expr:  sum(rate(requests{app="${app}", status_range=~"0xx|4xx|5xx"}[5m]))*60 > 25
+    for: 5m
+    annotations:
+      summary:     Failed requests count
+      dashboard:   ${grafana_dashboard_url}
+      description: "Number({{ $value }}) of non success status codes too high in the last 5 mins for ${app}"
+    labels:
+      severity:    high
+      app:         ${app}
+      environment: production
+%{ endfor ~}
