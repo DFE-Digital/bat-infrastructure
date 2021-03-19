@@ -1,0 +1,96 @@
+groups:
+- name: High CPU
+  rules:
+%{ for app in apps ~}
+  - alert: High-CPU-${app}
+    expr: avg by ( app ) (cpu{app=~"${app}"}) > 50
+    for: 5m
+    annotations:
+      summary:     ${app} High CPU Alert
+      dashboard:   ${grafana_dashboard_url}&var-Applications=${app}
+      description: "CPU usage has increased in the last 5 minutes (current value: {{ $value }}%)"
+    labels:
+      environment: production
+      severity:    high
+      app:         ${app}
+%{ endfor ~}
+
+- name: Memory Utilisation
+  rules:
+%{ for app in apps ~}  
+  - alert: High-Memory-Utilisation-${app}
+    expr: avg by ( app ) (memory_utilization{app=~"${app}"}) > 60
+    for: 5m
+    annotations:
+      summary:     ${app} high memory utilization
+      dashboard:   ${grafana_dashboard_url}&var-Applications=${app}
+      description: "Memory utilization has increased in the last 5 minutes (current value: {{ $value }}%)"
+    labels:
+      severity:    high
+      app:         ${app}
+      environment: production
+%{ endfor ~}
+
+- name: Disk Utilisation
+  rules:
+%{ for app in apps ~}  
+  - alert: High-Disk-Utilisation-${app}
+    expr: avg by ( app ) ( disk_utilization{ app=~"${app}" }) > 60
+    for: 5m
+    annotations:
+      summary:     ${app} high disk utilization
+      dashboard:   ${grafana_dashboard_url}&var-Applications=${app}
+      description: "Disk utilization has increased in the last 5 minutes (current value: {{ $value }})%"
+    labels:
+      severity:    high
+      app:         ${app}
+      environment: production
+%{ endfor ~}
+
+- name: App Crashes
+  rules:
+%{ for app in apps ~}  
+  - alert: App-Crash-${app}
+    expr: rate(crash{app=~"${app}"}[1m])*60 > 1
+    for: 5m
+    annotations:
+      summary:     At least one instance of ${app} has crashed in the last 5 mins
+      dashboard:   ${grafana_dashboard_url}&var-Applications=${app}
+      description: At least one instance of ${app} has crashed in the last 5 mins
+    labels:
+      severity:    high
+      app:         ${app}
+      environment: production
+%{ endfor ~}
+
+- name: Elevated Request Failures
+  rules:
+%{ for app in apps ~}  
+  - alert: Request-Failures-${app}
+    expr:  sum(rate(requests{app="${app}", status_range=~"0xx|4xx|5xx"}[5m]))*60 > 25
+    for: 5m
+    annotations:
+      summary:     Failed requests count
+      dashboard:   ${grafana_dashboard_url}&var-Applications=${app}
+      description: "Number({{ $value }}) of non success status codes too high in the last 5 mins for ${app}"
+    labels:
+      severity:    high
+      app:         ${app}
+      environment: production
+%{ endfor ~}
+
+- name: Average Response Time
+  rules:
+%{ for app in apps ~}  
+  - alert: Respose-Times-${app}
+    expr:  avg by (app) (rate(response_time_sum{app="${app}"}[5m])) > 2
+    for: 5m
+    annotations:
+      summary:     Increased Response Times
+      dashboard:   ${grafana_dashboard_url}&var-Applications=${app}
+      description: "Average response time has increased in the last 5 mins and is now ${{ value }} seconds"
+    labels:
+      severity:    high
+      app:         ${app}
+      environment: production
+%{ endfor ~}

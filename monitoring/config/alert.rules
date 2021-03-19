@@ -1,9 +1,0 @@
-groups:
-  - name: find-prod
-    rules:
-    - alert: High CPU
-      expr: avg by (app) (cpu{app="find-prod"}) > 0.10
-      labels:
-        severity: page
-      annotations:
-        summary: High CPU Alert
