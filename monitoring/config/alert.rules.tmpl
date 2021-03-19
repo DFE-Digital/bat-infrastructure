@@ -8,7 +8,7 @@ groups:
     annotations:
       summary:     ${app} High CPU Alert
       dashboard:   ${grafana_dashboard_url}&var-Applications=${app}
-      description: "CPU usage of at least for more than 5 minutes (current value: {{ $value }}%)"
+      description: "CPU usage has increased in the last 5 minutes (current value: {{ $value }}%)"
     labels:
       environment: production
       severity:    high
@@ -24,7 +24,7 @@ groups:
     annotations:
       summary:     ${app} high memory utilization
       dashboard:   ${grafana_dashboard_url}&var-Applications=${app}
-      description: "Memory utilization at least for more than 5 minutes (current value: {{ $value }}%)"
+      description: "Memory utilization has increased in the last 5 minutes (current value: {{ $value }}%)"
     labels:
       severity:    high
       app:         ${app}
@@ -40,7 +40,7 @@ groups:
     annotations:
       summary:     ${app} high disk utilization
       dashboard:   ${grafana_dashboard_url}&var-Applications=${app}
-      description: "Disk utilization is at least for more than 5 minutes (current value: {{ $value }})%"
+      description: "Disk utilization has increased in the last 5 minutes (current value: {{ $value }})%"
     labels:
       severity:    high
       app:         ${app}
@@ -54,9 +54,9 @@ groups:
     expr: rate(crash{app=~"${app}"}[1m])*60 > 1
     for: 5m
     annotations:
-      summary:     At least one instance of ${app} has crashed
+      summary:     At least one instance of ${app} has crashed in the last 5 mins
       dashboard:   ${grafana_dashboard_url}&var-Applications=${app}
-      description: At least one instance of ${app} has crashed
+      description: At least one instance of ${app} has crashed in the last 5 mins
     labels:
       severity:    high
       app:         ${app}
