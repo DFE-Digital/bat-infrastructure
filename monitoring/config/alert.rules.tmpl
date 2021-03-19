@@ -88,7 +88,7 @@ groups:
     annotations:
       summary:     Increased Response Times
       dashboard:   ${grafana_dashboard_url}&var-Applications=${app}
-      description: "Average response time has increased in the last 5 mins and is now ${{ value }} seconds"
+      description: "Average response time has increased in the last 5 mins and is now {{ $value }} seconds"
     labels:
       severity:    high
       app:         ${app}
