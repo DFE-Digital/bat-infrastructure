@@ -12,7 +12,6 @@ module prometheus_all {
   grafana_admin_password       = var.grafana_admin_password
   grafana_google_client_id     = var.grafana_google_client_id
   grafana_google_client_secret = var.grafana_google_client_secret
-  grafana_json_dashboards      = [file("./grafana_dashboards/production_dashboard.json"), file("./grafana_dashboards/qa_dashboard.json")]
 
   alert_rules            = local.alert_rules
   alertmanager_slack_url = var.alertmanager_slack_url
