@@ -1,7 +1,8 @@
 headers: &headers
   - Accept
   - Authorization
-qa:
+bat-qa:
+  service: bat-cdn-qa
   headers: *headers
   domain:
     - qa.find-postgraduate-teacher-training.service.gov.uk
@@ -9,14 +10,23 @@ qa:
     - qa.api.publish-teacher-training-courses.service.gov.uk
     - qa.publish-teacher-training-courses.service.gov.uk
     - audit.register-trainee-teachers.education.gov.uk
-staging:
+bat-staging:
+  service: bat-cdn-staging
   headers: *headers
   domain:
     - staging.find-postgraduate-teacher-training.service.gov.uk
     - staging.register-trainee-teachers.education.gov.uk
     - staging.api.publish-teacher-training-courses.service.gov.uk
     - staging.publish-teacher-training-courses.service.gov.uk
-prod:
+
+git-staging:
+  service: get-into-teaching-cdn-test
+  headers: *headers
+  domain:
+    - staging-adviser-getintoteaching.education.gov.uk
+    - staging-getintoteaching.education.gov.uk
+bat-prod:
+  service: bat-cdn-prod
   headers: *headers
   domain:
     - www2.find-postgraduate-teacher-training.service.gov.uk
@@ -27,4 +37,13 @@ prod:
     - sandbox.publish-teacher-training-courses.service.gov.uk
     - sandbox.register-trainee-teachers.education.gov.uk
     - www.publish-teacher-training-courses.service.gov.uk
-    - api.publish-teacher-training-courses.service.gov.uk
+
+git-prod:
+  service: get-into-teaching-cdn-prod
+  headers: *headers
+  domain:
+    - adviser-getintoteaching.education.gov.uk
+    - beta-adviser-getintoteaching.education.gov.uk
+    - getintoteaching.education.gov.uk
+    - beta-getintoteaching.education.gov.uk
+
