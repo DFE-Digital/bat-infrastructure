@@ -51,8 +51,8 @@ Running the script with any of the above will print out the desired `cf update <
 ### Example
 
 ```
-./bat-cdn.rb cf 
+./bat-cdn.rb git-staging
 
-update-service get-into-teaching-cdn-test -c '{"headers":["Accept","Authorization"],"domain":"staging-adviser-getintoteaching.education.gov.uk,staging-getintoteaching.education.gov.uk"}'-staging
+cf update-service get-into-teaching-cdn-test -c '{"headers":["Accept","Authorization"],"domain":"staging-adviser-getintoteaching.education.gov.uk,staging-getintoteaching.education.gov.uk"}'-staging
 
 ```
