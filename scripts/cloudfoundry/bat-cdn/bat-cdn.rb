@@ -11,6 +11,8 @@ output = {
     "domain" => input[_env]["domain"].join(",")
 }
 
-cmd = "cf update-service bat-cdn-#{_env} -c '#{output.to_json}'"
+service=input[_env]["service"] 
+
+cmd = "cf update-service #{service} -c '#{output.to_json}'"
 
 puts cmd
