@@ -15,7 +15,7 @@ terraform {
 }
 
 provider "cloudfoundry" {
-  api_url  = local.paas_api_url
-  user     = var.paas_user
-  password = var.paas_password
+  api_url  = local.cf_api_url
+  user     = var.cf_user
+  password = var.cf_password
 }
