@@ -10,6 +10,7 @@ bat-qa:
     - qa.api.publish-teacher-training-courses.service.gov.uk
     - qa.publish-teacher-training-courses.service.gov.uk
     - audit.register-trainee-teachers.education.gov.uk
+    - qa.apply-for-teacher-training.service.gov.uk
 bat-staging:
   service: bat-cdn-staging
   headers: *headers
@@ -18,6 +19,7 @@ bat-staging:
     - staging.register-trainee-teachers.education.gov.uk
     - staging.api.publish-teacher-training-courses.service.gov.uk
     - staging.publish-teacher-training-courses.service.gov.uk
+    - staging.apply-for-teacher-training.service.gov.uk
 
 git-staging:
   service: get-into-teaching-cdn-test
@@ -36,6 +38,8 @@ bat-prod:
     - sandbox.api.publish-teacher-training-courses.service.gov.uk
     - sandbox.publish-teacher-training-courses.service.gov.uk
     - sandbox.register-trainee-teachers.education.gov.uk
+    - sandbox.apply-for-teacher-training.service.gov.uk
+    - www.apply-for-teacher-training.service.gov.uk
     - www.publish-teacher-training-courses.service.gov.uk
 
 git-prod:
