@@ -24,8 +24,7 @@ jobs:
       - name: Terraform init, plan & apply
         run: |
           terraform init -backend-config workspace-variables/backend_${TF_VAR_monitoring_env}.tfvars
-          terraform plan -var-file workspace-variables/${TF_VAR_monitoring_env}.tfvars -out monitoring_tfplan
-          terraform apply "monitoring_tfplan"
+          terraform apply -var-file workspace-variables/${TF_VAR_monitoring_env}.tfvars -auto-approve
         working-directory: monitoring
         env:
           ARM_ACCESS_KEY: ${{ secrets[format('TERRAFORM_STATE_ACCESS_KEY_{0}', github.event.inputs.environment)] }}
