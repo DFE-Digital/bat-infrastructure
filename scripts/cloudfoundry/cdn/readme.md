@@ -38,20 +38,24 @@ please note, the ruby file takes single argument, which must be supplied when th
 The supplied argument (ARVG) represents the intended target environment. To run the script from the shell, do the following:-
 
 ### Valid options
-|Option.       |Application       |Environment|
-|--------------|------------------|-----------|
-|bat-qa        |Becoming A Teacher|QA         |
-|bat-staging   |Becoming A Teacher|Staging    |
-|bat-prod      |Becoming A Teacher|Production |
-|git-staging   |Get Into Teaching |Staging    | 
-|git-prod      |Get Into Teaching |Production |
+|Option.       |Application                |Environment|
+|--------------|---------------------------|-----------|
+|bat-qa        |Becoming A Teacher         |QA         |
+|bat-staging   |Becoming A Teacher         |Staging    |
+|bat-prod      |Becoming A Teacher         |Production |
+|git-staging   |Get Into Teaching          |Staging    |
+|git-prod      |Get Into Teaching          |Production |
+|apply-qa      |Apply For Teacher Training |QA         |
+|apply-staging |Apply For Teacher Training |Staging    |
+|apply-prod    |Apply For Teacher Training |Production |
+
 
 Running the script with any of the above will print out the desired `cf update <service_name>` command along with the newly updated custom domain. The output can then be executed from the shell, while logged into Cloudfoundry.
 
 ### Example
 
 ```
-./bat-cdn.rb git-staging
+./cdn.rb git-staging
 
 cf update-service get-into-teaching-cdn-test -c '{"headers":["Accept","Authorization"],"domain":"staging-adviser-getintoteaching.education.gov.uk,staging-getintoteaching.education.gov.uk"}'-staging
 
