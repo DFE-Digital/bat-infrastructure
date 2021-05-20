@@ -26,6 +26,8 @@ variable alertmanager_app_names {}
 
 variable postgres_services {}
 
+variable redis_services {}
+
 locals {
   paas_api_url               = "https://api.london.cloud.service.gov.uk"
   alertmanager_slack_channel = "twd_bat_devops"
@@ -33,6 +35,8 @@ locals {
     grafana_dashboard_url = "https://grafana-bat.london.cloudapps.digital/d/eF19g4RZx/cf-apps?orgId=1&refresh=10s&var-SpaceName=${var.monitoring_space_name}"
     apps                  = var.alertmanager_app_names
   }
-  alert_rules       = templatefile("./config/alert.rules.tmpl", local.alert_rules_variables)
+  alert_rules = templatefile("./config/alert.rules.tmpl", local.alert_rules_variables)
+
   postgres_services = [for postgres_service in var.postgres_services : "${var.monitoring_space_name}/${postgres_service}"]
+  redis_services    = [for redis_service in var.redis_services : "${var.monitoring_space_name}/${redis_service}"]
 }

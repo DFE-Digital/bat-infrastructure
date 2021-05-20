@@ -22,5 +22,6 @@ module prometheus_all {
 
   influxdb_service_plan = var.influxdb_service_plan
 
+  redis_services    = local.redis_services
   postgres_services = local.postgres_services
 }
