@@ -21,4 +21,6 @@ module prometheus_all {
   alertmanager_slack_url = var.alertmanager_slack_url
 
   influxdb_service_plan = var.influxdb_service_plan
+
+  postgres_services = local.postgres_services
 }
