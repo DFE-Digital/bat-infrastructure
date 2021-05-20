@@ -9,6 +9,9 @@ module prometheus_all {
   paas_exporter_username = var.paas_exporter_username
   paas_exporter_password = var.paas_exporter_password
 
+  prometheus_disk_quota = 2048
+  prometheus_memory     = 2048
+
   grafana_admin_password       = var.grafana_admin_password
   grafana_google_client_id     = var.grafana_google_client_id
   grafana_google_client_secret = var.grafana_google_client_secret
