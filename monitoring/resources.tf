@@ -9,12 +9,19 @@ module prometheus_all {
   paas_exporter_username = var.paas_exporter_username
   paas_exporter_password = var.paas_exporter_password
 
+  prometheus_disk_quota = 2048
+  prometheus_memory     = 2048
+
   grafana_admin_password       = var.grafana_admin_password
   grafana_google_client_id     = var.grafana_google_client_id
   grafana_google_client_secret = var.grafana_google_client_secret
+  grafana_runtime_version      = "7.2.2"
 
   alert_rules            = local.alert_rules
   alertmanager_slack_url = var.alertmanager_slack_url
 
   influxdb_service_plan = var.influxdb_service_plan
+
+  redis_services    = local.redis_services
+  postgres_services = local.postgres_services
 }
