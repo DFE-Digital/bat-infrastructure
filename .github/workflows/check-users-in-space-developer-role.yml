@@ -1,4 +1,4 @@
-name: 'checker users space developer role'
+name: 'check users in space developer role'
 
 on:
   schedule: # 1700hrs Mon-Fri
