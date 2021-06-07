@@ -14,7 +14,7 @@ terraform {
   }
 }
 
-provider cloudfoundry {
+provider "cloudfoundry" {
   api_url      = local.paas_api_url
   user         = var.paas_user != "" ? var.paas_user : null
   password     = var.paas_password != "" ? var.paas_password : null

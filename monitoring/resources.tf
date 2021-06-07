@@ -1,4 +1,4 @@
-module prometheus_all {
+module "prometheus_all" {
   source = "git::https://github.com/DFE-Digital/cf-monitoring//prometheus_all"
 
   enabled_modules          = ["paas_prometheus_exporter", "prometheus", "grafana", "influxdb", "alertmanager"]
