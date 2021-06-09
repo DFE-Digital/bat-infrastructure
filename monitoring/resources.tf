@@ -11,6 +11,7 @@ module "prometheus_all" {
 
   prometheus_disk_quota = 2048
   prometheus_memory     = 2048
+  internal_apps         = var.internal_apps
 
   grafana_admin_password       = var.grafana_admin_password
   grafana_google_client_id     = var.grafana_google_client_id

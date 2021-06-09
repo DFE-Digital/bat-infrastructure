@@ -28,6 +28,8 @@ variable "postgres_services" {}
 
 variable "redis_services" {}
 
+variable "internal_apps" { default = [] }
+
 locals {
   paas_api_url               = "https://api.london.cloud.service.gov.uk"
   alertmanager_slack_channel = "twd_bat_devops"
