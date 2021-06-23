@@ -8,10 +8,11 @@ input = YAML.load_file('cdn-config.yml')
 
 output = {
     "headers" => input[_env]["headers"],
-    "domain" => input[_env]["domain"].join(",")
-}
+    "domain"  => input[_env]["domain"].join(","),
+    "cookies" => input[_env]["cookies"],
+}.select{|k,v| !v.nil? }
 
-service=input[_env]["service"] 
+service=input[_env]["service"]
 
 cmd = "cf update-service #{service} -c '#{output.to_json}'"
 
