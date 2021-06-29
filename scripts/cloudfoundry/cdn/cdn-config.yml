@@ -30,6 +30,7 @@ git-staging:
   domain:
     - staging-adviser-getintoteaching.education.gov.uk
     - staging-getintoteaching.education.gov.uk
+    - staging-schoolexperience.education.gov.uk
 bat-prod:
   service: bat-cdn-prod
   headers: *headers
