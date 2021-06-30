@@ -2,6 +2,29 @@ monitoring_space_name    = "bat-prod"
 monitoring_instance_name = "bat"
 influxdb_service_plan    = "small-1_x"
 alertmanager_app_names   = ["find-prod", "find-staging", "publish-teacher-training-prod", "publish-teacher-training-staging", "teacher-training-api-prod", "teacher-training-api-staging", "register-production", "register-staging", "apply-staging", "apply-prod"]
-postgres_services        = ["apply-postgres-prod", "apply-postgres-sandbox", "register-postgres-production", "register-postgres-sandbox", "teacher-training-api-postgres-prod", "teacher-training-api-postgres-sandbox"]
-redis_services           = ["apply-redis-prod", "apply-redis-sandbox", "register-redis-cache-production", "register-redis-worker-production", "register-redis-cache-sandbox", "register-redis-worker-sandbox", "teacher-training-api-redis-prod", "teacher-training-api-redis-sandbox"]
-internal_apps            = ["apply-prod.apps.internal"]
+postgres_services = [
+  "bat-staging/apply-postgres-staging",
+  "bat-staging/register-postgres-staging",
+  "bat-staging/teacher-training-api-postgres-staging",
+  "bat-prod/apply-postgres-prod",
+  "bat-prod/apply-postgres-sandbox",
+  "bat-prod/register-postgres-production",
+  "bat-prod/register-postgres-sandbox",
+  "bat-prod/teacher-training-api-postgres-prod",
+  "bat-prod/teacher-training-api-postgres-sandbox",
+]
+redis_services = [
+  "bat-staging/apply-redis-prod",
+  "bat-staging/register-redis-cache-production",
+  "bat-staging/register-redis-worker-production",
+  "bat-staging/teacher-training-api-redis-prod",
+  "bat-prod/apply-redis-prod",
+  "bat-prod/apply-redis-sandbox",
+  "bat-prod/register-redis-cache-production",
+  "bat-prod/register-redis-worker-production",
+  "bat-prod/register-redis-cache-sandbox",
+  "bat-prod/register-redis-worker-sandbox",
+  "bat-prod/teacher-training-api-redis-prod",
+  "bat-prod/teacher-training-api-redis-sandbox",
+]
+internal_apps = ["apply-staging.apps.internal", "apply-sandbox.apps.internal", "apply-prod.apps.internal"]
