@@ -14,10 +14,10 @@ postgres_services = [
   "bat-prod/teacher-training-api-postgres-sandbox",
 ]
 redis_services = [
-  "bat-staging/apply-redis-prod",
-  "bat-staging/register-redis-cache-production",
-  "bat-staging/register-redis-worker-production",
-  "bat-staging/teacher-training-api-redis-prod",
+  "bat-staging/apply-redis-staging",
+  "bat-staging/register-redis-cache-staging",
+  "bat-staging/register-redis-worker-staging",
+  "bat-staging/teacher-training-api-redis-staging",
   "bat-prod/apply-redis-prod",
   "bat-prod/apply-redis-sandbox",
   "bat-prod/register-redis-cache-production",
