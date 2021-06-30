@@ -38,7 +38,4 @@ locals {
     apps                  = var.alertmanager_app_names
   }
   alert_rules = templatefile("./config/alert.rules.tmpl", local.alert_rules_variables)
-
-  postgres_services = [for postgres_service in var.postgres_services : "${var.monitoring_space_name}/${postgres_service}"]
-  redis_services    = [for redis_service in var.redis_services : "${var.monitoring_space_name}/${redis_service}"]
 }
