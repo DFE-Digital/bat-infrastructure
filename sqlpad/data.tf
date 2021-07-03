@@ -10,3 +10,7 @@ data "cloudfoundry_space" "space" {
 data "cloudfoundry_domain" "london_cloudapps_digital" {
   name = "london.cloudapps.digital"
 }
+
+data "cloudfoundry_service" "postgres" {
+  name = "postgres"
+}
