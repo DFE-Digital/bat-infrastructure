@@ -6,7 +6,7 @@ variable "cf_space" {}
 
 variable "app_instances" { default = 1 }
 
-variable "app_memory" { default = 512 }
+variable "app_memory" { default = 1024 }
 
 variable "sqlpad_admin" {}
 
@@ -18,8 +18,9 @@ variable "connections" {}
 
 locals {
   cf_api_url       = "https://api.london.cloud.service.gov.uk"
-  app_docker_image = "sqlpad/sqlpad:6.5"
+  app_docker_image = "sqlpad/sqlpad:6.7.1"
   app_name         = "bat-sqlpad"
+  postgres_name    = "bat-sqlpad-postgres"
 
   sqlpad_connections = [
     for index, connection in jsondecode(var.connections) :
@@ -35,15 +36,11 @@ locals {
   app_env_variables = merge({
     SQLPAD_ADMIN                  = var.sqlpad_admin
     SQLPAD_ADMIN_PASSWORD         = ""
+    SQLPAD_BACKEND_DB_URI         = "${cloudfoundry_service_key.postgres_service_key.credentials.uri}?ssl=no-verify"
+    SQLPAD_QUERY_RESULT_MAX_ROWS  = 100000
     SQLPAD_USERPASS_AUTH_DISABLED = true
     PUBLIC_URL                    = "https://${cloudfoundry_route.web_app_cloudapps_digital_route.endpoint}"
     SQLPAD_GOOGLE_CLIENT_ID       = var.sqlpad_google_client_id
     SQLPAD_GOOGLE_CLIENT_SECRET   = var.sqlpad_google_client_secret
-    ## SQLlite, the backing database for SQLPad
-    SQLPAD_CONNECTIONS__sqllite__name                             = "SQLPad"
-    SQLPAD_CONNECTIONS__sqllite__driver                           = "sqlite"
-    SQLPAD_CONNECTIONS__sqllite__multiStatementTransactionEnabled = true
-    SQLPAD_CONNECTIONS__sqllite__filename                         = "/var/lib/sqlpad/sqlpad.sqlite"
-    SQLPAD_CONNECTIONS__sqllite__readonly                         = true
   }, local.connections)
 }
