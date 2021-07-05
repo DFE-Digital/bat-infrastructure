@@ -6,6 +6,7 @@ apply-headers: &apply-headers
   - Accept
   - Authorization
   - Referer
+  - User-Agent
 
 bat-qa:
   service: bat-cdn-qa
