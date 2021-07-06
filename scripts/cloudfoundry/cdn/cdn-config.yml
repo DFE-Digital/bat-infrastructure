@@ -1,3 +1,6 @@
+all-headers: &all-headers
+  - "*"
+
 headers: &headers
   - Accept
   - Authorization
@@ -10,7 +13,7 @@ apply-headers: &apply-headers
 
 bat-qa:
   service: bat-cdn-qa
-  headers: *headers
+  headers: *all-headers
   domain:
     - qa.find-postgraduate-teacher-training.service.gov.uk
     - qa.register-trainee-teachers.education.gov.uk
@@ -19,7 +22,7 @@ bat-qa:
     - audit.register-trainee-teachers.education.gov.uk
 bat-staging:
   service: bat-cdn-staging
-  headers: *headers
+  headers: *all-headers
   domain:
     - staging.find-postgraduate-teacher-training.service.gov.uk
     - staging.register-trainee-teachers.education.gov.uk
@@ -35,7 +38,7 @@ git-staging:
     - staging-schoolexperience.education.gov.uk
 bat-prod:
   service: bat-cdn-prod
-  headers: *headers
+  headers: *all-headers
   domain:
     - www2.find-postgraduate-teacher-training.service.gov.uk
     - www.find-postgraduate-teacher-training.service.gov.uk
