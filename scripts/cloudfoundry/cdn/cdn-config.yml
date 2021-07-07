@@ -48,6 +48,7 @@ bat-prod:
     - sandbox.publish-teacher-training-courses.service.gov.uk
     - sandbox.register-trainee-teachers.education.gov.uk
     - www.publish-teacher-training-courses.service.gov.uk
+    - api.publish-teacher-training-courses.service.gov.uk
 git-prod:
   service: get-into-teaching-cdn-prod
   headers: *headers
