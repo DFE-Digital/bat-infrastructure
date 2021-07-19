@@ -4,7 +4,7 @@ inputs:
   available-environments:
     description: 'Comma separated list of available environments, eg: qa, staging, production'
     required: false
-    default: qa, staging, production, sandbox, rollover, research, pen
+    default: qa, staging, production, sandbox, research
 outputs:
   environments:
     description: The environment matrix
