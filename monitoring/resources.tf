@@ -10,7 +10,7 @@ module "prometheus_all" {
   paas_exporter_password = var.paas_exporter_password
 
   prometheus_disk_quota = 2048
-  prometheus_memory     = 2048
+  prometheus_memory     = 4096
   internal_apps         = var.internal_apps
 
   grafana_admin_password       = var.grafana_admin_password
