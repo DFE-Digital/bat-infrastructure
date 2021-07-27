@@ -27,4 +27,4 @@ redis_services = [
   "bat-prod/teacher-training-api-redis-prod",
   "bat-prod/teacher-training-api-redis-sandbox",
 ]
-internal_apps = ["apply-sandbox.apps.internal", "apply-prod.apps.internal", "apply-load-test.apps.internal"]
+internal_apps = ["apply-sandbox.apps.internal", "apply-prod.apps.internal", "apply-load-test.apps.internal", "apply-jmeter.london.cloudapps.digital"]
