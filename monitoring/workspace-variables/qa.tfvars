@@ -8,7 +8,7 @@ postgres_services = [
   "bat-qa/teacher-training-api-postgres-qa",
 ]
 redis_services = [
-  "bat-qa/apply-redis-qa",
+  "bat-qa/apply-worker-redis-qa",
   "bat-qa/register-redis-cache-qa",
   "bat-qa/register-redis-worker-qa",
   "bat-qa/teacher-training-api-redis-qa",
