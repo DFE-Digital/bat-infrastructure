@@ -32,4 +32,4 @@ redis_services = [
   "bat-prod/teacher-training-api-redis-prod",
   "bat-prod/teacher-training-api-redis-sandbox",
 ]
-internal_apps = ["apply-sandbox.apps.internal", "apply-prod.apps.internal", "apply-load-test.apps.internal", "apply-jmeter.apps.internal", "find-jmeter.apps.internal"]
+internal_apps = ["apply-sandbox.apps.internal", "apply-prod.apps.internal", "apply-load-test.apps.internal", "apply-jmeter.apps.internal", "find-jmeter.apps.internal", "apply-vendor-jmeter.apps.internal", "apply-manage-jmeter.apps.internal"]
