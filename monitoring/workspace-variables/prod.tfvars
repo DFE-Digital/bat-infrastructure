@@ -31,5 +31,7 @@ redis_services = [
   "bat-prod/register-redis-worker-sandbox",
   "bat-prod/teacher-training-api-redis-prod",
   "bat-prod/teacher-training-api-redis-sandbox",
+  "bat-prod/find-redis-loadtest",
+  "bat-prod/find-redis-prod",
 ]
 internal_apps = ["apply-sandbox.apps.internal", "apply-prod.apps.internal", "apply-load-test.apps.internal", "apply-jmeter.apps.internal", "find-jmeter.apps.internal", "apply-vendor-jmeter.apps.internal", "apply-manage-jmeter.apps.internal"]
