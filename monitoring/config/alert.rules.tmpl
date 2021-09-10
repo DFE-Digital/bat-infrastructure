@@ -17,7 +17,7 @@ groups:
 
 - name: Memory Utilisation
   rules:
-%{ for app in apps ~}  
+%{ for app in apps ~}
   - alert: High-Memory-Utilisation-${app}
     expr: avg by ( app ) (memory_utilization{app=~"${app}"}) > 60
     for: 5m
@@ -33,7 +33,7 @@ groups:
 
 - name: Disk Utilisation
   rules:
-%{ for app in apps ~}  
+%{ for app in apps ~}
   - alert: High-Disk-Utilisation-${app}
     expr: avg by ( app ) ( disk_utilization{ app=~"${app}" }) > 60
     for: 5m
@@ -49,7 +49,7 @@ groups:
 
 - name: App Crashes
   rules:
-%{ for app in apps ~}  
+%{ for app in apps ~}
   - alert: App-Crash-${app}
     expr: rate(crash{app=~"${app}"}[1m])*60 > 1
     for: 5m
@@ -65,7 +65,7 @@ groups:
 
 - name: Elevated Request Failures
   rules:
-%{ for app in apps ~}  
+%{ for app in apps ~}
   - alert: Request-Failures-${app}
     expr:  sum(rate(requests{app="${app}", status_range=~"0xx|4xx|5xx"}[5m]))*60 > 25
     for: 5m
@@ -81,7 +81,7 @@ groups:
 
 - name: Average Response Time
   rules:
-%{ for app in apps ~}  
+%{ for app in apps ~}
   - alert: Respose-Times-${app}
     expr:  avg by (app) (rate(response_time_sum{app="${app}"}[5m])) > 2
     for: 5m
@@ -92,5 +92,21 @@ groups:
     labels:
       severity:    high
       app:         ${app}
+      environment: production
+%{ endfor ~}
+
+- name: Redis Memory Utilisation
+  rules:
+%{ for redis_instance in redis_instances ~}
+  - alert: Redis memory utilisation high (instance - ${redis_instance})
+    expr: (redis_memory_used_bytes{instance=~"${redis_instance}"} / redis_memory_max_bytes{instance=~"${redis_instance}"}) > 0.60
+    for: 4m
+    annotations:
+      summary:     ${redis_instance} high memory utilization
+      dashboard:   ${redis_dashboard_url}&var-instance=${redis_instance}.london.cloudapps.digital:443
+      description: "Redis Memory utilization is greater than 60% (current value: {{ $value }})"
+    labels:
+      severity:    high
+      app:         ${redis_instance}
       environment: production
 %{ endfor ~}
