@@ -81,14 +81,18 @@ bat-assets-qa:
   cookies: false
   domain:
     - qa-assets.apply-for-teacher-training.service.gov.uk
+    - qa-assets.find-postgraduate-teacher-training.service.gov.uk
 bat-assets-staging:
   service: bat-cdn-assets-staging
   cookies: false
   domain:
     - staging-assets.apply-for-teacher-training.service.gov.uk
+    - staging-assets.find-postgraduate-teacher-training.service.gov.uk
 bat-assets-prod:
   service: bat-cdn-assets-prod
   cookies: false
   domain:
     - assets.apply-for-teacher-training.service.gov.uk
     - sandbox-assets.apply-for-teacher-training.service.gov.uk
+    - assets.find-postgraduate-teacher-training.service.gov.uk
+    - sandbox-assets.find-postgraduate-teacher-training.service.gov.uk
