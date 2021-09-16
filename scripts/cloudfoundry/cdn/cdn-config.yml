@@ -39,7 +39,6 @@ bat-prod:
   service: bat-cdn-prod
   headers: *all-headers
   domain:
-    - www2.find-postgraduate-teacher-training.service.gov.uk
     - www.find-postgraduate-teacher-training.service.gov.uk
     - www.register-trainee-teachers.education.gov.uk
     - sandbox.find-postgraduate-teacher-training.service.gov.uk
