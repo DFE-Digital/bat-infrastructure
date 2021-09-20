@@ -28,6 +28,9 @@ bat-staging:
     - staging.register-trainee-teachers.education.gov.uk
     - staging.api.publish-teacher-training-courses.service.gov.uk
     - staging.publish-teacher-training-courses.service.gov.uk
+    - pen.find-postgraduate-teacher-training.service.gov.uk
+    - pen.api.publish-teacher-training-courses.service.gov.uk
+    - pen.publish-teacher-training-courses.service.gov.uk
 git-staging:
   service: get-into-teaching-cdn-test
   headers: *headers
