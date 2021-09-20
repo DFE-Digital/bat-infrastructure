@@ -40,7 +40,6 @@ git-staging:
     - staging-adviser-getintoteaching.education.gov.uk
     - staging-getintoteaching.education.gov.uk
     - staging-schoolexperience.education.gov.uk
-    - schoolexperience-staging.education.gov.uk
 bat-prod:
   service: bat-cdn-prod
   headers: *all-headers
