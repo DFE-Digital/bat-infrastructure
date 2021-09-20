@@ -65,7 +65,6 @@ git-prod:
     - beta-adviser-getintoteaching.education.gov.uk
     - getintoteaching.education.gov.uk
     - beta-getintoteaching.education.gov.uk
-    - schoolexperience.education.gov.uk
 apply-qa:
   service: apply-cdn-qa
   headers: *apply-headers
