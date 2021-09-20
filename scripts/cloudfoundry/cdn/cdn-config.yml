@@ -31,6 +31,7 @@ git-staging:
     - staging-adviser-getintoteaching.education.gov.uk
     - staging-getintoteaching.education.gov.uk
     - staging-schoolexperience.education.gov.uk
+    - schoolexperience-staging.education.gov.uk
 bat-prod:
   service: bat-cdn-prod
   headers: *headers
@@ -51,6 +52,7 @@ git-prod:
     - beta-adviser-getintoteaching.education.gov.uk
     - getintoteaching.education.gov.uk
     - beta-getintoteaching.education.gov.uk
+    - schoolexperience.education.gov.uk
 apply-qa:
   service: apply-cdn-qa
   headers: *apply-headers
