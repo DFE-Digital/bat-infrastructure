@@ -4,14 +4,14 @@ inputs:
   available-environments:
     description: 'Comma separated list of available environments, eg: qa, staging, production'
     required: false
-    default: qa, staging, production, sandbox, rollover, research
+    default: qa, staging, production, sandbox, research
 outputs:
-  environments: 
+  environments:
     description: The environment matrix
     value: ${{ steps.select-environments.outputs.environments }}
 runs:
   using: composite
-  steps: 
+  steps:
     - name:  Prepare Environment Matrix
       shell: pwsh
       id:    select-environments

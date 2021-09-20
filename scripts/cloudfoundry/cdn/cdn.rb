@@ -2,9 +2,18 @@
 require 'yaml'
 require 'json'
 
-_env = ARGV[0]
+def usage(input)
+    puts "Usage: ./cdn.rb <CDN instance>"
+    puts "Known CDN instances:"
+    puts input.keys.select{|c| !c.include? "headers"}
+    exit
+end
 
 input = YAML.load_file('cdn-config.yml')
+
+usage(input) if ARGV.empty?
+
+_env = ARGV[0]
 
 output = {
     "headers" => input[_env]["headers"],
