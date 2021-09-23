@@ -38,6 +38,11 @@ git-staging:
     - staging-adviser-getintoteaching.education.gov.uk
     - staging-getintoteaching.education.gov.uk
     - staging-schoolexperience.education.gov.uk
+git-assets-staging:
+  service: get-into-teaching-cdn-test-assets
+  cookies: false
+  domain:
+    - assets-staging-getintoteaching.education.gov.uk
 bat-prod:
   service: bat-cdn-prod
   headers: *all-headers
