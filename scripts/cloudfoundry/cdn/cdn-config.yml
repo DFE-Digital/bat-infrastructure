@@ -31,6 +31,13 @@ bat-staging:
     - pen.api.publish-teacher-training-courses.service.gov.uk
     - pen.publish-teacher-training-courses.service.gov.uk
     - staging.register-trainee-teachers.education.gov.uk
+    
+se-staging:
+  service: schoolexperience-cdn-test
+  headers: *headers
+  domain:
+    - schoolexperience-staging.education.gov.uk
+
 git-staging:
   service: get-into-teaching-cdn-test
   headers: *headers
@@ -50,6 +57,11 @@ bat-prod:
     - sandbox.register-trainee-teachers.education.gov.uk
     - www.publish-teacher-training-courses.service.gov.uk
     - api.publish-teacher-training-courses.service.gov.uk
+se-prod:
+  service: schoolexperience-cdn-prod
+  headers: *headers
+  domain:
+    - schoolexperience.education.gov.uk
 git-prod:
   service: get-into-teaching-cdn-prod
   headers: *headers
