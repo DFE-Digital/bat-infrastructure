@@ -29,9 +29,13 @@ redis_services = [
   "bat-prod/register-redis-worker-production",
   "bat-prod/register-redis-cache-sandbox",
   "bat-prod/register-redis-worker-sandbox",
-  "bat-prod/teacher-training-api-redis-prod",
-  "bat-prod/teacher-training-api-redis-sandbox",
-  "bat-prod/find-redis-loadtest",
-  "bat-prod/find-redis-prod",
+  "bat-prod/teacher-training-api-cache-redis-prod",
+  "bat-prod/teacher-training-api-cache-redis-sandbox",
+  "bat-prod/teacher-training-api-worker-redis-prod",
+  "bat-prod/teacher-training-api-worker-redis-sandbox",
+  "bat-prod/find-cache-redis-loadtest",
+  "bat-prod/find-worker-redis-loadtest",
+  "bat-prod/find-cache-redis-prod",
+  "bat-prod/find-worker-redis-prod",
 ]
 internal_apps = ["apply-sandbox.apps.internal", "apply-prod.apps.internal", "apply-load-test.apps.internal", "apply-jmeter.apps.internal", "find-jmeter.apps.internal", "apply-vendor-jmeter.apps.internal", "apply-manage-jmeter.apps.internal"]
