@@ -28,16 +28,20 @@ variable "postgres_services" {}
 
 variable "redis_services" {}
 
+variable "alertable_redis_services" {}
+
 variable "internal_apps" { default = [] }
 
 locals {
   paas_api_url               = "https://api.london.cloud.service.gov.uk"
   alertmanager_slack_channel = "twd_bat_devops"
   alert_rules_variables = {
-    grafana_dashboard_url = "https://grafana-bat.london.cloudapps.digital/d/eF19g4RZx/cf-apps?orgId=1&refresh=10s&var-SpaceName=${var.monitoring_space_name}"
-    redis_dashboard_url   = "https://grafana-bat.london.cloudapps.digital/d/_XaXFGTMz/redis?orgId=1&refresh=30s"
-    apps                  = var.alertmanager_app_names
-    redis_instances       = [for r in var.redis_services : split("/", r)[1] ]
+    grafana_dashboard_url     = "https://grafana-bat.london.cloudapps.digital/d/eF19g4RZx/cf-apps?orgId=1&refresh=10s&var-SpaceName=${var.monitoring_space_name}"
+    redis_dashboard_url       = "https://grafana-bat.london.cloudapps.digital/d/_XaXFGTMz/redis?orgId=1&refresh=30s"
+    apps                      = var.alertmanager_app_names
+    alertable_redis_instances = [for r in var.alertable_redis_services : split("/", r)[1]]
   }
   alert_rules = templatefile("./config/alert.rules.tmpl", local.alert_rules_variables)
+
+  redis_services = merge(var.redis_services, var.alertable_redis_services)
 }

@@ -9,10 +9,13 @@ postgres_services = [
   "bat-qa/teacher-training-api-postgres-loadtest",
 ]
 redis_services = [
-  "bat-qa/apply-worker-redis-qa",
+  "bat-qa/apply-cache-redis-qa",
   "bat-qa/register-redis-cache-qa",
+  "bat-qa/teacher-training-api-cache-redis-qa",
+]
+alertable_redis_services = [
+  "bat-qa/apply-worker-redis-qa",
   "bat-qa/register-redis-worker-qa",
-  "bat-qa/teacher-training-api-redis-qa",
-  "bat-qa/teacher-training-api-redis-loadtest"
+  "bat-qa/teacher-training-api-worker-redis-qa",
 ]
 internal_apps = ["apply-qa.apps.internal"]
