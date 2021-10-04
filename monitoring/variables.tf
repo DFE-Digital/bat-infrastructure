@@ -43,5 +43,5 @@ locals {
   }
   alert_rules = templatefile("./config/alert.rules.tmpl", local.alert_rules_variables)
 
-  redis_services = merge(var.redis_services, var.alertable_redis_services)
+  redis_services = concat(var.redis_services, var.alertable_redis_services)
 }
