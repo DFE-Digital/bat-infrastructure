@@ -58,7 +58,7 @@ bat-prod:
     - www.publish-teacher-training-courses.service.gov.uk
     - api.publish-teacher-training-courses.service.gov.uk
 se-prod:
-  service: schoolexperience-cdn-prod
+  service: schoolexperience-cdn-prod2
   headers: *all-headers
   domain:
     - schoolexperience.education.gov.uk
