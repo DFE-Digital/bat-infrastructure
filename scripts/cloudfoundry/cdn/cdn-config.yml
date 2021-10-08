@@ -34,7 +34,7 @@ bat-staging:
     
 se-staging:
   service: schoolexperience-cdn-test
-  headers: *headers
+  headers: *all-headers
   domain:
     - schoolexperience-staging.education.gov.uk
 
@@ -58,8 +58,8 @@ bat-prod:
     - www.publish-teacher-training-courses.service.gov.uk
     - api.publish-teacher-training-courses.service.gov.uk
 se-prod:
-  service: schoolexperience-cdn-prod
-  headers: *headers
+  service: schoolexperience-cdn-prod2
+  headers: *all-headers
   domain:
     - schoolexperience.education.gov.uk
 git-prod:
