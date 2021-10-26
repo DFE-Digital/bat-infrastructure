@@ -31,6 +31,13 @@ bat-staging:
     - pen.api.publish-teacher-training-courses.service.gov.uk
     - pen.publish-teacher-training-courses.service.gov.uk
     - staging.register-trainee-teachers.education.gov.uk
+    
+se-staging:
+  service: schoolexperience-cdn-test
+  headers: *all-headers
+  domain:
+    - schoolexperience-staging.education.gov.uk
+
 git-staging:
   service: get-into-teaching-cdn-test
   headers: *headers
@@ -60,6 +67,11 @@ git-assets-production:
   cookies: false
   domain:
     - app-assets-getintoteaching.education.gov.uk
+se-prod:
+  service: schoolexperience-cdn-prod2
+  headers: *all-headers
+  domain:
+    - schoolexperience.education.gov.uk
 git-prod:
   service: get-into-teaching-cdn-prod
   headers: *headers

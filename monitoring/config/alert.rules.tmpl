@@ -97,7 +97,7 @@ groups:
 
 - name: Redis Memory Utilisation
   rules:
-%{ for redis_instance in redis_instances ~}
+%{ for redis_instance in alertable_redis_instances ~}
   - alert: Redis memory utilisation high (instance - ${redis_instance})
     expr: (redis_memory_used_bytes{instance=~"${redis_instance}"} / redis_memory_max_bytes{instance=~"${redis_instance}"}) > 0.60
     for: 4m
