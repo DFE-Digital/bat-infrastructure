@@ -45,6 +45,11 @@ git-staging:
     - staging-adviser-getintoteaching.education.gov.uk
     - staging-getintoteaching.education.gov.uk
     - staging-schoolexperience.education.gov.uk
+git-assets-staging:
+  service: get-into-teaching-cdn-test-assets
+  cookies: false
+  domain:
+    - assets-staging-getintoteaching.education.gov.uk
 bat-prod:
   service: bat-cdn-prod
   headers: *all-headers
@@ -57,6 +62,11 @@ bat-prod:
     - sandbox.register-trainee-teachers.education.gov.uk
     - www.publish-teacher-training-courses.service.gov.uk
     - api.publish-teacher-training-courses.service.gov.uk
+git-assets-production:
+  service: get-into-teaching-cdn-prod-assets
+  cookies: false
+  domain:
+    - app-assets-getintoteaching.education.gov.uk
 se-prod:
   service: schoolexperience-cdn-prod2
   headers: *all-headers
