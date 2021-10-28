@@ -5,22 +5,21 @@ module "prometheus_all" {
   monitoring_org_name      = data.cloudfoundry_org.dfe.name
   monitoring_space_name    = var.monitoring_space_name
 
-  paas_exporter_username = var.paas_exporter_username
-  paas_exporter_password = var.paas_exporter_password
+  paas_exporter_username = local.infra_secrets["PAAS_EXPORTER_USERNAME"]
+  paas_exporter_password = local.infra_secrets["PAAS_EXPORTER_PASSWORD"]
 
   prometheus_disk_quota = 2048
   prometheus_memory     = 4096
   internal_apps         = var.internal_apps
 
-  grafana_admin_password       = var.grafana_admin_password
-  grafana_google_client_id     = var.grafana_google_client_id
-  grafana_google_client_secret = var.grafana_google_client_secret
+  grafana_admin_password       = local.infra_secrets["GRAFANA_ADMIN_PASSWORD"]
+  grafana_google_client_id     = local.infra_secrets["GRAFANA_GOOGLE_CLIENT_ID"]
+  grafana_google_client_secret = local.infra_secrets["GRAFANA_GOOGLE_CLIENT_SECRET"]
   grafana_runtime_version      = "7.5.11"
   grafana_json_dashboards      = [file("dashboards/bat_runtime.json")]
 
-
   alert_rules            = local.alert_rules
-  alertmanager_slack_url = var.alertmanager_slack_url
+  alertmanager_slack_url = local.infra_secrets["SLACK_WEBHOOK"]
 
   influxdb_service_plan = var.influxdb_service_plan
 
