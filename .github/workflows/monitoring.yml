@@ -16,25 +16,25 @@ jobs:
       - uses: actions/checkout@v2
         name: Checkout
 
+      - name: Set environment variables
+        run: |
+          echo "MONITORING_ENV=${{ github.event.inputs.environment }}" >> $GITHUB_ENV
+
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets[format('AZURE_CREDENTIALS_{0}', env.MONITORING_ENV)] }}
+
+      - name: Validate secrets
+        run: make $MONITORING_ENV validate-infra-secrets
+
       - name: Setup Terraform v0.15.5
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.15.5
 
       - name: Terraform init, plan & apply
-        run: |
-          terraform init -backend-config workspace-variables/backend_${TF_VAR_monitoring_env}.tfvars
-          terraform apply -var-file workspace-variables/${TF_VAR_monitoring_env}.tfvars -auto-approve
-        working-directory: monitoring
+        run: make $MONITORING_ENV ci monitoring-apply
         env:
-          ARM_ACCESS_KEY: ${{ secrets[format('TERRAFORM_STATE_ACCESS_KEY_{0}', github.event.inputs.environment)] }}
-          TF_VAR_paas_user: ${{ secrets[format('CF_USER_{0}', github.event.inputs.environment)] }}
-          TF_VAR_paas_password: ${{ secrets[format('CF_PASSWORD_{0}', github.event.inputs.environment)] }}
-          TF_VAR_paas_sso_code: ''
-          TF_VAR_monitoring_env: ${{ github.event.inputs.environment }}
-          TF_VAR_paas_exporter_username: ${{ secrets.CF_SPACE_AUDITOR_USER }}
-          TF_VAR_paas_exporter_password: ${{ secrets.CF_SPACE_AUDITOR_PASSWORD }}
-          TF_VAR_grafana_google_client_id: ${{ secrets.GRAFANA_GOOGLE_CLIENT_ID }}
-          TF_VAR_grafana_google_client_secret: ${{ secrets.GRAFANA_GOOGLE_CLIENT_SECRET }}
-          TF_VAR_grafana_admin_password: ${{ secrets.GRAFANA_ADMIN_PASSWORD }}
-          TF_VAR_alertmanager_slack_url: ${{ secrets.SLACK_WEBHOOK }}
+          ARM_ACCESS_KEY: ${{ secrets[format('TERRAFORM_STATE_ACCESS_KEY_{0}', env.MONITORING_ENV)] }}
+          TF_VAR_azure_credentials: ${{ secrets[format('AZURE_CREDENTIALS_{0}', env.MONITORING_ENV)] }}
+          CONFIRM_PRODUCTION: yes
