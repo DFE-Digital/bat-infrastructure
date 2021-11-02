@@ -20,7 +20,7 @@ set-azure-account:
 
 monitoring-init: set-azure-account
 	$(if $(or $(DISABLE_PASSCODE),$(PASSCODE)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
-	cd monitoring && terraform init -backend-config workspace-variables/backend_${DEPLOY_ENV}.tfvars -upgrade
+	cd monitoring && terraform init -backend-config workspace-variables/backend_${DEPLOY_ENV}.tfvars -upgrade -reconfigure
 
 monitoring-plan: monitoring-init
 	cd monitoring && terraform plan -var-file workspace-variables/${DEPLOY_ENV}.tfvars.json
