@@ -8,7 +8,7 @@ module "prometheus_all" {
   paas_exporter_username = local.infra_secrets["PAAS_EXPORTER_USERNAME"]
   paas_exporter_password = local.infra_secrets["PAAS_EXPORTER_PASSWORD"]
 
-  prometheus_disk_quota = 2048
+  prometheus_disk_quota = 5120
   prometheus_memory     = 4096
   internal_apps         = var.internal_apps
 
