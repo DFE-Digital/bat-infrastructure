@@ -12,6 +12,7 @@ terraform {
   }
   backend "azurerm" {
   }
+  experiments = [module_variable_optional_attrs]
 }
 
 provider "cloudfoundry" {
