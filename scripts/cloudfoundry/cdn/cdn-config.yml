@@ -124,3 +124,18 @@ bat-assets-prod:
     - sandbox-assets.apply-for-teacher-training.service.gov.uk
     - assets.find-postgraduate-teacher-training.service.gov.uk
     - sandbox-assets.find-postgraduate-teacher-training.service.gov.uk
+tra-production:
+  service: teacher-qualifications-api-cdn-production
+  headers: *all-headers
+  domain:
+    - teacher-qualifications-api.education.gov.uk
+tra-preprod:
+  service: teacher-qualifications-api-cdn-preprod
+  headers: *all-headers
+  domain:
+    - preprod-teacher-qualifications-api.education.gov.uk
+tra-test:
+  service: teacher-qualifications-api-cdn-test
+  headers: *all-headers
+  domain:
+    - test-teacher-qualifications-api.education.gov.uk
