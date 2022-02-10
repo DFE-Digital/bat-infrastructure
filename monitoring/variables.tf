@@ -5,7 +5,13 @@ variable "monitoring_instance_name" {}
 
 variable "influxdb_service_plan" {}
 
-variable "alertmanager_app_names" {}
+variable "alertmanager_app_config" {
+  type = map(
+    object({
+      response_threshold = optional(number)
+    })
+  )
+}
 
 variable "postgres_services" {}
 variable "redis_services" {}
@@ -27,7 +33,7 @@ locals {
   alert_rules_variables = {
     grafana_dashboard_url     = "https://grafana-bat.london.cloudapps.digital/d/eF19g4RZx/cf-apps?orgId=1&refresh=10s&var-SpaceName=${var.monitoring_space_name}"
     redis_dashboard_url       = "https://grafana-bat.london.cloudapps.digital/d/_XaXFGTMz/redis?orgId=1&refresh=30s"
-    apps                      = var.alertmanager_app_names
+    apps                      = var.alertmanager_app_config
     alertable_redis_instances = [for r in var.alertable_redis_services : split("/", r)[1]]
   }
   alert_rules = templatefile("./config/alert.rules.tmpl", local.alert_rules_variables)
