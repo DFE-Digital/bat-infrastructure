@@ -88,7 +88,7 @@ groups:
     annotations:
       summary:     Slow running requests
       dashboard:   ${grafana_dashboard_url}&var-Applications=${app_name}
-      description: "Requests in the 95 percentile taking longer than 3 seconds (current value: {{ humanize $value}}s )"
+      description: "Requests in the 95 percentile taking longer than %{ if app_config.response_threshold == null }1%{ else }${app_config.response_threshold}%{ endif } seconds (current value: {{ humanize $value}}s )"
     labels:
       severity:    high
       app:         ${app_name}
