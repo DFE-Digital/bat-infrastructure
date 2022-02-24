@@ -25,4 +25,6 @@ module "prometheus_all" {
 
   redis_services    = local.redis_services
   postgres_services = var.postgres_services
+
+  enable_prometheus_yearly = true
 }
