@@ -33,6 +33,7 @@ bat-staging:
     - pen.publish-teacher-training-courses.service.gov.uk
     - staging.register-trainee-teachers.education.gov.uk
     - staging2.publish-teacher-training-courses.service.gov.uk
+    - traineeteacherportal-pp.education.gov.uk
 
 se-staging:
   service: schoolexperience-cdn-test
@@ -66,6 +67,7 @@ bat-prod:
     - api.publish-teacher-training-courses.service.gov.uk
     - sandbox2.publish-teacher-training-courses.service.gov.uk
     - www2.publish-teacher-training-courses.service.gov.uk
+    - traineeteacherportal.education.gov.uk
 git-assets-production:
   service: get-into-teaching-cdn-prod-assets
   cookies: false
