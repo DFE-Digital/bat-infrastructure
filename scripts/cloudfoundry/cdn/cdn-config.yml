@@ -21,6 +21,7 @@ bat-qa:
     - qa.publish-teacher-training-courses.service.gov.uk
     - audit.register-trainee-teachers.education.gov.uk
     - qa2.publish-teacher-training-courses.service.gov.uk
+    - traineeteacherportal-dv.education.gov.uk
 bat-staging:
   service: bat-cdn-staging
   headers: *all-headers
