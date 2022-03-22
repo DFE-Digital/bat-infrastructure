@@ -142,3 +142,23 @@ tra-test:
   headers: *all-headers
   domain:
     - test-teacher-qualifications-api.education.gov.uk
+tra-falt-production:
+  service: find-a-lost-trn-cdn-production
+  headers: *all-headers
+  domain:
+    - find-a-lost-trn.education.gov.uk
+tra-falt-preprod:
+  service: find-a-lost-trn-cdn-preprod
+  headers: *all-headers
+  domain:
+    - preprod-find-a-lost-trn.education.gov.uk
+tra-falt-test:
+  service: find-a-lost-trn-cdn-test
+  headers: *all-headers
+  domain:
+    - test-find-a-lost-trn.education.gov.uk
+tra-falt-dev:
+  service: find-a-lost-trn-cdn-dev
+  headers: *all-headers
+  domain:
+    - dev-find-a-lost-trn.education.gov.uk
