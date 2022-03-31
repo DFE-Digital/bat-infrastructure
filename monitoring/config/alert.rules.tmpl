@@ -110,3 +110,24 @@ groups:
       app:         ${redis_instance}
       environment: production
 %{ endfor ~}
+
+- name: Slow Sidekiq Jobs
+  rules:
+%{ for app_name, app_config in apps ~}
+%{ if app_config.sidekiq_worker_app_names != null }
+%{ for worker_app_name in app_config.sidekiq_worker_app_names ~}
+  - alert: Slow Sidekiq Runtime (${worker_app_name})
+    ##TO DO: revert threshold to 10
+    expr: count(max(rate(sidekiq_job_runtime_seconds_sum{app="${worker_app_name}"}[2m])) by (worker) / max(rate(sidekiq_job_runtime_seconds_count{app="${worker_app_name}"}[2m])) by (worker) > 0.2) > 0
+    for: 9s
+    annotations:
+      summary:     Sidekiq job runtime greater than 10 seconds
+      dashboard:   ${sidekiq_dashboard_url}&var-Apps=${worker_app_name}
+      description: Runtime for ${worker_app_name} sidekiq job(s) in the last 2 minutes 10 seconds or higher
+    labels:
+      severity:    high
+      app:         ${worker_app_name}
+      environment: ${monitoring_space_name}
+%{ endfor ~}
+%{ endif }
+%{ endfor ~}
