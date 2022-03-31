@@ -31,10 +31,11 @@ locals {
   paas_api_url               = "https://api.london.cloud.service.gov.uk"
   alertmanager_slack_channel = "twd_bat_devops"
   alert_rules_variables = {
-    grafana_dashboard_url     = "https://grafana-bat.london.cloudapps.digital/d/eF19g4RZx/cf-apps?orgId=1&refresh=10s&var-SpaceName=${var.monitoring_space_name}"
-    redis_dashboard_url       = "https://grafana-bat.london.cloudapps.digital/d/_XaXFGTMz/redis?orgId=1&refresh=30s"
+    cfapps_dashboard_url     = "https://grafana-${var.monitoring_instance_name}.london.cloudapps.digital/d/eF19g4RZx/cf-apps?orgId=1&refresh=10s&var-SpaceName=${var.monitoring_space_name}"
+    redis_dashboard_url       = "https://grafana-${var.monitoring_instance_name}.london.cloudapps.digital/d/_XaXFGTMz/redis?orgId=1&refresh=30s"
     apps                      = var.alertmanager_app_config
     alertable_redis_instances = [for r in var.alertable_redis_services : split("/", r)[1]]
+    monitoring_space_name = var.monitoring_space_name
   }
   alert_rules = templatefile("./config/alert.rules.tmpl", local.alert_rules_variables)
 
