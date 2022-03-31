@@ -7,10 +7,10 @@ groups:
     for: 5m
     annotations:
       summary:     ${app_name} High CPU Alert
-      dashboard:   ${grafana_dashboard_url}&var-Applications=${app_name}
+      dashboard:   ${cfapps_dashboard_url}&var-Applications=${app_name}
       description: "CPU usage has increased in the last 5 minutes (current value: {{ $value }}%)"
     labels:
-      environment: production
+      environment: ${monitoring_space_name}
       severity:    high
       app:         ${app_name}
 %{ endfor ~}
@@ -23,12 +23,12 @@ groups:
     for: 5m
     annotations:
       summary:     ${app_name} high memory utilization
-      dashboard:   ${grafana_dashboard_url}&var-Applications=${app_name}
+      dashboard:   ${cfapps_dashboard_url}&var-Applications=${app_name}
       description: "Memory utilization has increased in the last 5 minutes (current value: {{ $value }}%)"
     labels:
       severity:    high
       app:         ${app_name}
-      environment: production
+      environment: ${monitoring_space_name}
 %{ endfor ~}
 
 - name: Disk Utilisation
@@ -39,12 +39,12 @@ groups:
     for: 5m
     annotations:
       summary:     ${app_name} high disk utilization
-      dashboard:   ${grafana_dashboard_url}&var-Applications=${app_name}
+      dashboard:   ${cfapps_dashboard_url}&var-Applications=${app_name}
       description: "Disk utilization has increased in the last 5 minutes (current value: {{ $value }})%"
     labels:
       severity:    high
       app:         ${app_name}
-      environment: production
+      environment: ${monitoring_space_name}
 %{ endfor ~}
 
 - name: App Crashes
@@ -55,12 +55,12 @@ groups:
     for: 5m
     annotations:
       summary:     At least one instance of ${app_name} has crashed in the last 5 mins
-      dashboard:   ${grafana_dashboard_url}&var-Applications=${app_name}
+      dashboard:   ${cfapps_dashboard_url}&var-Applications=${app_name}
       description: At least one instance of ${app_name} has crashed in the last 5 mins
     labels:
       severity:    high
       app:         ${app_name}
-      environment: production
+      environment: ${monitoring_space_name}
 %{ endfor ~}
 
 - name: Elevated Request Failures
@@ -71,12 +71,12 @@ groups:
     for: 5m
     annotations:
       summary:     Failed requests count
-      dashboard:   ${grafana_dashboard_url}&var-Applications=${app_name}
+      dashboard:   ${cfapps_dashboard_url}&var-Applications=${app_name}
       description: "Number({{ $value }}) of non success status codes too high in the last 5 mins for ${app_name}"
     labels:
       severity:    high
       app:         ${app_name}
-      environment: production
+      environment: ${monitoring_space_name}
 %{ endfor ~}
 
 - name: Average Response Time
@@ -87,12 +87,12 @@ groups:
     for: 5m
     annotations:
       summary:     Slow running requests
-      dashboard:   ${grafana_dashboard_url}&var-Applications=${app_name}
+      dashboard:   ${cfapps_dashboard_url}&var-Applications=${app_name}
       description: "Requests in the 95 percentile taking longer than %{ if app_config.response_threshold == null }1%{ else }${app_config.response_threshold}%{ endif } seconds (current value: {{ humanize $value}}s )"
     labels:
       severity:    high
       app:         ${app_name}
-      environment: production
+      environment: ${monitoring_space_name}
 %{ endfor ~}
 
 - name: Redis Memory Utilisation
@@ -108,7 +108,7 @@ groups:
     labels:
       severity:    high
       app:         ${redis_instance}
-      environment: production
+      environment: ${monitoring_space_name}
 %{ endfor ~}
 
 - name: Slow Sidekiq Jobs
