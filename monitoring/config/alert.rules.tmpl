@@ -110,3 +110,51 @@ groups:
       app:         ${redis_instance}
       environment: production
 %{ endfor ~}
+
+- name: Postgres Memory Available
+  rules:
+%{ for postgres_instance in alertable_postgres_instances ~}
+  - alert: Postgres memory available low (instance - ${postgres_instance})
+    expr: freeable_memory_bytes{service=~"${postgres_instance}"} < (512 * 1024 * 1024)
+    for: 5m
+    annotations:
+      summary:     ${postgres_instance} low memory available
+      dashboard:   ${postgres_dashboard_url}&var-Services=${postgres_instance}
+      description: "Postgres Memory available is less than 512M (current value: {{ $value }})"
+    labels:
+      severity:    high
+      app:         ${postgres_instance}
+      environment: production
+%{ endfor ~}
+
+- name: Postgres CPU Utilisation
+  rules:
+%{ for postgres_instance in alertable_postgres_instances ~}
+  - alert: Postgres CPU Utilisation high (instance - ${postgres_instance})
+    expr: cpu_percent{service=~"${postgres_instance}"} > 60
+    for: 5m
+    annotations:
+      summary:     ${postgres_instance} high CPU Utilisation
+      dashboard:   ${postgres_dashboard_url}&var-Services=${postgres_instance}
+      description: "Postgres CPU Utilisation is above 60% (current value: {{ $value }})"
+    labels:
+      severity:    high
+      app:         ${postgres_instance}
+      environment: production
+%{ endfor ~}
+
+- name: Postgres Storage Utilisation
+  rules:
+%{ for postgres_instance in alertable_postgres_instances ~}
+  - alert: Postgres Storage available low (instance - ${postgres_instance})
+    expr: free_storage_space_bytes{service=~"${postgres_instance}"} < (1024 * 1024 * 1024)
+    for: 5m
+    annotations:
+      summary:     ${postgres_instance} low storage available
+      dashboard:   ${postgres_dashboard_url}&var-Services=${postgres_instance}
+      description: "Postgres Storage available is less than 1G (current value: {{ $value }})"
+    labels:
+      severity:    high
+      app:         ${postgres_instance}
+      environment: production
+%{ endfor ~}

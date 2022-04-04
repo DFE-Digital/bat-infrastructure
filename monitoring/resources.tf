@@ -24,7 +24,7 @@ module "prometheus_all" {
   influxdb_service_plan = var.influxdb_service_plan
 
   redis_services    = local.redis_services
-  postgres_services = var.postgres_services
+  postgres_services = local.postgres_services
 
   enable_prometheus_yearly = true
 }
