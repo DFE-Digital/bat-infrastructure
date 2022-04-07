@@ -4,3 +4,4 @@
 **/terraform.tfvars
 .terraform.lock.hcl
 bin/fetch_config.rb
+.vscode/

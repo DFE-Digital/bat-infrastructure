@@ -1,87 +1,134 @@
 #!/usr/bin/env pwsh
-
-[CmdletBinding(PositionalBinding = $False)]
-param([Parameter(Mandatory)] $space, [Parameter(Mandatory)] $slack_webhook, $unset, $whitelist)
+[CmdletBinding(PositionalBinding = $false)]
+param(
+  [Parameter(Mandatory=$true)]
+  [string]$Space,
+  [Parameter(Mandatory=$true)]
+  [string]$SlackWebhook,
+  [Parameter(Mandatory=$false)]
+  [switch]$Unset,
+  [Parameter(Mandatory=$false)]
+  [string]$Whitelist
+)
 
 $ErrorActionPreference = "Stop"
-$bearer = $(cf oauth-token)
+$InformationPreference = "Continue"
 
-$headers = @{
-  Authorization = "$bearer"
-  Accept        = "application/json"
-}
+function Get-RolesToBeDeleted {
+  param(
+    [Parameter(Mandatory=$true)]
+    [string]$Space,
+    [Parameter(Mandatory=$true)]
+    [hashtable]$Headers,
+    [Parameter(Mandatory=$false)]
+    [array]$ProtectedUserNames
+  )
 
-$UNSET = $unset -eq "true"
-if ($UNSET -and $whitelist) {
-  $PROTECTED_USERNAMES = $whitelist.Split(",")
-}
+  $SpaceDetails = Invoke-RestMethod -Uri "https://api.london.cloud.service.gov.uk/v3/spaces?names=$Space" -Headers $Headers
+  $SpaceGuid = $SpaceDetails.resources[0].guid
 
-function rolesToBeDeleted {
-  param($space, $headers)
+  $Roles = Invoke-RestMethod -Uri "https://api.london.cloud.service.gov.uk/v3/roles?space_guids=$SpaceGuid&types=space_developer" -Headers $Headers
 
-  $space_details = Invoke-RestMethod "https://api.london.cloud.service.gov.uk/v3/spaces?names=${space}" -H $headers
-  $space_guid = $space_details.resources[0].guid
-
-  $roles = Invoke-RestMethod "https://api.london.cloud.service.gov.uk/v3/roles?space_guids=${space_guid}&types=space_developer" -H $headers
-
-  if (-not $PROTECTED_USERNAMES) {
-    return $roles.resources
+  if (!$ProtectedUserNames) {
+    $Roles.resources
   }
-
-  $protected_users = Invoke-RestMethod "https://api.london.cloud.service.gov.uk/v3/users?usernames=$($PROTECTED_USERNAMES -join ',')" -H $headers
-
-  $roles.resources | Where-Object {
-    $_.relationships.user.data.guid -notin $protected_users.resources.guid
+  else {
+    $ProtectedUsers = Invoke-RestMethod -Uri "https://api.london.cloud.service.gov.uk/v3/users?usernames=$($ProtectedUserNames -join ',')" -Headers $Headers
+    $Roles.resources | Where-Object { $_.relationships.user.data.guid -notin $ProtectedUsers.resources.guid }
   }
 }
 
-function deleteRoles {
-  param ($roles_to_be_deleted, $headers)
+function Remove-Role {
+  param (
+    [Parameter(Mandatory=$true)]
+    [array]$RolesToBeDeleted,
+    [Parameter(Mandatory=$true)]
+    [hashtable]$Headers
+  )
 
-  $roles_to_be_deleted.guid | ForEach-Object {
-    Write-Host "Deleting role ${_}"
-    Invoke-RestMethod -StatusCodeVariable "status" -Method Delete "https://api.london.cloud.service.gov.uk/v3/roles/${_}" -H $headers
-    if ($status -eq 202) { Write-Host "ok" } else { Write-Host "Failed: status code ${status}" }
+  foreach ($Role in $RolesToBeDeleted.guid) {
+    Write-Information "Deleting role $Role"
+    Invoke-RestMethod -StatusCodeVariable Status -Method Delete -Uri "https://api.london.cloud.service.gov.uk/v3/roles/$Role" -Headers $Headers
+    if ($Status -eq 202) {
+      Write-Information "Deleted role"
+    }
+    else {
+      Write-Information "Failed to delete role: status code $Status"
+    }
   }
 }
 
-function notify {
-  param ($message, $headers, $roles_to_be_deleted)
+function Write-SlackMessage {
+  param (
+    [Parameter(Mandatory=$true)]
+    [hashtable]$Headers,
+    [Parameter(Mandatory=$true)]
+    [string]$Message,
+    [Parameter(Mandatory=$true)]
+    [array]$RolesToBeDeleted,
+    [Parameter(Mandatory=$true)]
+    [string]$SlackWebhook
+  )
 
-  $users_ids_csv = $roles_to_be_deleted.relationships.user.data.guid -join ','
-  $users = Invoke-RestMethod "https://api.london.cloud.service.gov.uk/v3/users?guids=${users_ids_csv}" -H $headers
+  $UsersIdsCsv = $RolesToBeDeleted.relationships.user.data.guid -join ','
+  $Users = Invoke-RestMethod -Uri "https://api.london.cloud.service.gov.uk/v3/users?guids=$UsersIdsCsv" -Headers $Headers
 
-  $body = ConvertTo-Json @{
-    text = $message + "`n" +
-      $($users.resources.username -join "`n") + "`n" + "`n" +
-      "To resolve SSO Ids, please visit:`n" +
-      "https://dfedigital.atlassian.net/wiki/spaces/BaT/pages/1935048705/Single+sign-on+SSO"
+  $Body = ConvertTo-Json -InputObject @{
+    text = "$Message`n$($Users.resources.username -join "`n")`n`nTo resolve SSO Ids, please visit:`nhttps://dfedigital.atlassian.net/wiki/spaces/BaT/pages/1935048705/Single+sign-on+SSO"
     type = "mrkdwn"
   }
 
-  Write-Host "Posting to Slack"
-  $response = Invoke-RestMethod -uri $slack_webhook -Method Post -body $body -ContentType 'application/json'
-  Write-Host $response
+  Write-Information "Posting to Slack $Message"
+  $Response = Invoke-RestMethod -Uri $SlackWebhook -Method Post -Body $Body -ContentType 'application/json'
+  Write-Information $Response
 }
 
-function processRoles {
-  param ($roles_to_be_deleted, $headers, $space, $unset)
+function Invoke-RoleProcessing {
+  param (
+    [Parameter(Mandatory=$true)]
+    [array]$RolesToBeDeleted,
+    [Parameter(Mandatory=$true)]
+    [hashtable]$Headers,
+    [Parameter(Mandatory=$true)]
+    [string]$SlackWebhook,
+    [Parameter(Mandatory=$true)]
+    [string]$Space,
+    [Parameter(Mandatory=$false)]
+    [switch]$Unset
+  )
 
-  if ($unset) {
-    deleteRoles $roles_to_be_deleted $headers
-    $message = ":warning: The following users had SpaceDeveloper role revoked in PaaS space ${space}:"
+  if ($Unset.IsPresent) {
+    Remove-Role -RolesToBeDeleted $RolesToBeDeleted -Headers $Headers
+    $Message = ":warning: The following users had SpaceDeveloper role revoked in PaaS space $Space`:"
   }
   else {
-    $message = ":warning: The following users have the SpaceDeveloper role in PaaS space ${space}:"
+    $Message = ":warning: The following users have the SpaceDeveloper role in PaaS space $Space`:"
   }
 
-  notify $message $headers $roles_to_be_deleted
+  Write-SlackMessage -Message $Message -Headers $Headers -RolesToBeDeleted $RolesToBeDeleted -SlackWebhook $SlackWebhook
 }
 
-# BEGIN
-$roles_to_be_deleted = rolesToBeDeleted $space $headers $UNSET
-
-if ($roles_to_be_deleted.count -gt 0) {
-  processRoles $roles_to_be_deleted $headers $space $UNSET
+$Bearer = cf oauth-token
+$Headers = @{
+  Authorization = "$Bearer"
+  Accept        = "application/json"
 }
-# END
+
+if ($Whitelist) {
+  $ProtectedUserNames = $Whitelist.Split(",")
+  $RolesToBeDeleted = Get-RolesToBeDeleted -Space $Space -Headers $Headers -ProtectedUserNames $ProtectedUserNames
+}
+else {
+  $RolesToBeDeleted = Get-RolesToBeDeleted -Space $Space -Headers $Headers
+}
+
+Write-Information "Retrieved $($RolesToBeDeleted.count) roles"
+if ($RolesToBeDeleted.count -gt 0) {
+  if ($Unset.IsPresent) {
+    Invoke-RoleProcessing -RolesToBeDeleted $RolesToBeDeleted -Headers $Headers -SlackWebhook $SlackWebhook -Space $Space -Unset
+  }
+  else {
+    Invoke-RoleProcessing -RolesToBeDeleted $RolesToBeDeleted -Headers $Headers -SlackWebhook $SlackWebhook -Space $Space
+  }
+  
+}
