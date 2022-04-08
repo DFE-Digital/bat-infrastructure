@@ -22,11 +22,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run powershell script
+        shell: pwsh
         run: |
           ./scripts/check-users-in-space-developer-role.ps1 \
-            -space "${{ env.CF_SPACE_NAME }}" \
-            -slack_webhook "${{secrets.SLACK_WEBHOOK}}" \
-            -unset true \
-            -whitelist "${{secrets.PAAS_USER_WHITELIST}}"
+            -Space "${{ env.CF_SPACE_NAME }}" \
+            -SlackWebhook "${{secrets.SLACK_WEBHOOK}}" \
+            -Unset \
+            -Whitelist "${{secrets.PAAS_USER_WHITELIST}}"
         env:
           CF_SPACE_NAME: bat-prod
