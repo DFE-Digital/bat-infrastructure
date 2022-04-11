@@ -24,10 +24,10 @@ jobs:
       - name: Run powershell script
         shell: pwsh
         run: |
-          ./scripts/check-users-in-space-developer-role.ps1 \
-            -Space "${{ env.CF_SPACE_NAME }}" \
-            -SlackWebhook "${{secrets.SLACK_WEBHOOK}}" \
-            -Unset \
+          ./scripts/check-users-in-space-developer-role.ps1 `
+            -Space "${{ env.CF_SPACE_NAME }}" `
+            -SlackWebhook "${{secrets.SLACK_WEBHOOK}}" `
+            -Unset `
             -Whitelist "${{secrets.PAAS_USER_WHITELIST}}"
         env:
           CF_SPACE_NAME: bat-prod
