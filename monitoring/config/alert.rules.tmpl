@@ -67,12 +67,12 @@ groups:
   rules:
 %{ for app_name, app_config in apps ~}
   - alert: Request-Failures-${app_name}
-    expr:  sum(rate(requests{app="${app_name}", status_range=~"0xx|4xx|5xx"}[5m]))*60 > 25
+    expr: (sum(rate(requests{app="${app_name}", status_range=~"5xx"}[5m]))) / (sum(rate(requests{app="${app_name}"}[5m])) ) > 0.1
     for: 5m
     annotations:
-      summary:     Failed requests count
+      summary:     High rate of failing requests
       dashboard:   ${cfapps_dashboard_url}&var-Applications=${app_name}
-      description: "Number({{ $value }}) of non success status codes too high in the last 5 mins for ${app_name}"
+      description: "The proportion of failed 5xx HTTP requests in the past 5 min is above 10% (current value: {{ humanizePercentage $value }})"
     labels:
       severity:    high
       app:         ${app_name}
