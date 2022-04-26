@@ -1,12 +1,20 @@
 ## Overview
 
-The Ruby script is to assist in generating the Cloudfoundry 'cf update-service <service_name>' command.
+The Ruby script is to assist in generating the Cloudfoundry `cf update-service <service_name>` command or `cf create-service <service> <plan> <service_name>` command
 
-As new custom domains are onboarded, there is the need to update the existing CDN service on Cloudfoundry.
+As new custom domains are onboarded, there is the need to create or update the existing CDN service on Cloudfoundry.
 
-## Example
+## Example 1
 
-An example of the 'cf update-service <service_name>' command is described below:-
+An example of the `cf create-service <service> <plane> <service_name>` command is described below:-
+
+```
+cf create-service cdn-route cdn-route bat-cdn-qa -c \
+'{"headers":["Accept","Authorization"],"domain":"qa.find-postgraduate-teacher-training.service.gov.uk,qa.register-trainee-teachers.education.gov.uk,qa.api.publish-teacher-training-courses.service.gov.uk,qa.publish-teacher-training-courses.service.gov.uk"}'
+```
+## Example 2
+
+An example of the `cf update-service <service_name>` command is described below:-
 
 ```
 cf update-service bat-cdn-qa -c \
@@ -50,13 +58,24 @@ The supplied argument (ARVG) represents the intended target environment. To run 
 |apply-prod    |Apply For Teacher Training |Production |
 
 
-Running the script with any of the above will print out the desired `cf update <service_name>` command along with the newly updated custom domain. The output can then be executed from the shell, while logged into Cloudfoundry.
+Running the script with any of the above will print out the desired `cf update-service <service_name>` or `cf create-service <service> <plan> <service_name>` command along with the newly updated custom domain. The output can then be executed from the shell, while logged into Cloudfoundry.
 
-### Example
+### Example 1 - Create
 
 ```
-./cdn.rb git-staging
+./cdn.rb create git-staging
+
+cf create-service cdn-route cdn-route get-into-teaching-cdn-test -c '{"headers":["Accept","Authorization"],"domain":"staging-adviser-getintoteaching.education.gov.uk,staging-getintoteaching.education.gov.uk"}'-staging
+
+```
+
+### Example 2 - Update
+
+```
+./cdn.rb update git-staging
 
 cf update-service get-into-teaching-cdn-test -c '{"headers":["Accept","Authorization"],"domain":"staging-adviser-getintoteaching.education.gov.uk,staging-getintoteaching.education.gov.uk"}'-staging
 
 ```
+
+
