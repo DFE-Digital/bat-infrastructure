@@ -6,7 +6,11 @@ on:
       environment:
         description: Environment to deploy, qa or prod
         required: true
-        default: prod
+        type: choice
+        options:
+          - qa
+          - prod
+        default: qa
 
 jobs:
   deploy:
