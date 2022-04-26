@@ -1,5 +1,5 @@
 module "prometheus_all" {
-  source = "git::https://github.com/DFE-Digital/cf-monitoring//prometheus_all"
+  source = "git::https://github.com/DFE-Digital/cf-monitoring//prometheus_all?ref=refine-request-status-dashboard"
 
   monitoring_instance_name = var.monitoring_instance_name
   monitoring_org_name      = data.cloudfoundry_org.dfe.name
