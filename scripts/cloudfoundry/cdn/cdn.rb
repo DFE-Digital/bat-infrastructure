@@ -3,7 +3,7 @@ require 'yaml'
 require 'json'
 
 def usage(input)
-    puts "Usage: ./cdn.rb <CDN instance>"
+    puts "Usage: ./cdn.rb <create / update> <CDN instance>"
     puts "Known CDN instances:"
     puts input.keys.select{|c| !c.include? "headers"}
     exit
@@ -13,7 +13,8 @@ input = YAML.load_file('cdn-config.yml')
 
 usage(input) if ARGV.empty?
 
-_env = ARGV[0]
+_action = ARGV[0]
+_env = ARGV[1]
 
 output = {
     "headers" => input[_env]["headers"],
@@ -23,6 +24,11 @@ output = {
 
 service=input[_env]["service"]
 
-cmd = "cf update-service #{service} -c '#{output.to_json}'"
-
+if(_action == "create")
+    cmd = "cf create-service cdn-route cdn-route #{service} -c '#{output.to_json}'"
+elsif (_action == "update")
+    cmd = "cf update-service #{service} -c '#{output.to_json}'"
+else
+    usage(input)
+end
 puts cmd
