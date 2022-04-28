@@ -42,6 +42,24 @@ register-qa:
   domain:
     - qa.register-trainee-teachers.service.gov.uk
 
+register-staging:
+  service: register-cdn-staging
+  headers: *all-headers
+  domain:
+    - staging.register-trainee-teachers.service.gov.uk
+
+register-sandbox:
+  service: register-cdn-sandbox
+  headers: *all-headers
+  domain:
+    - sandbox.register-trainee-teachers.service.gov.uk
+
+register-prod:
+  service: register-cdn-prod
+  headers: *all-headers
+  domain:
+    - www.register-trainee-teachers.service.gov.uk
+
 se-staging:
   service: schoolexperience-cdn-test
   headers: *all-headers
