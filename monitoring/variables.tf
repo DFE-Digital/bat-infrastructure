@@ -16,6 +16,10 @@ variable "alertmanager_app_config" {
 variable "postgres_services" {}
 variable "redis_services" {}
 variable "alertable_redis_services" {}
+variable "alertable_postgres_services" {
+  default = {}
+}
+variable "postgres_dashboard_url" { default = "" }
 
 variable "internal_apps" { default = [] }
 

@@ -23,8 +23,10 @@ module "prometheus_all" {
 
   influxdb_service_plan = var.influxdb_service_plan
 
-  redis_services    = local.redis_services
-  postgres_services = var.postgres_services
+  redis_services              = local.redis_services
+  postgres_services           = var.postgres_services
+  alertable_postgres_services = var.alertable_postgres_services
+  postgres_dashboard_url      = var.postgres_dashboard_url
 
   enable_prometheus_yearly = true
 }
