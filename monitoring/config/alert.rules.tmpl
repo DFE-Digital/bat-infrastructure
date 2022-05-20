@@ -13,6 +13,7 @@ groups:
       environment: ${monitoring_space_name}
       severity:    high
       app:         ${app_name}
+      %{ if app_config.receiver != null }receiver:     ${app_config.receiver}%{ endif }
 %{ endfor ~}
 
 - name: Memory Utilisation
@@ -29,6 +30,7 @@ groups:
       severity:    high
       app:         ${app_name}
       environment: ${monitoring_space_name}
+      %{ if app_config.receiver != null }receiver:     ${app_config.receiver}%{ endif }
 %{ endfor ~}
 
 - name: Disk Utilisation
@@ -45,6 +47,7 @@ groups:
       severity:    high
       app:         ${app_name}
       environment: ${monitoring_space_name}
+      %{ if app_config.receiver != null }receiver:     ${app_config.receiver}%{ endif }
 %{ endfor ~}
 
 - name: App Crashes
@@ -61,6 +64,7 @@ groups:
       severity:    high
       app:         ${app_name}
       environment: ${monitoring_space_name}
+      %{ if app_config.receiver != null }receiver:     ${app_config.receiver}%{ endif }
 %{ endfor ~}
 
 - name: Elevated Request Failures
@@ -77,6 +81,7 @@ groups:
       severity:    high
       app:         ${app_name}
       environment: ${monitoring_space_name}
+      %{ if app_config.receiver != null }receiver:     ${app_config.receiver}%{ endif }
 %{ endfor ~}
 
 - name: Average Response Time
@@ -93,6 +98,7 @@ groups:
       severity:    high
       app:         ${app_name}
       environment: ${monitoring_space_name}
+      %{ if app_config.receiver != null }receiver:     ${app_config.receiver}%{ endif }
 %{ endfor ~}
 
 - name: Redis Memory Utilisation

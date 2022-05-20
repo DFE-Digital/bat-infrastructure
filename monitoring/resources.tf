@@ -19,6 +19,7 @@ module "prometheus_all" {
   grafana_json_dashboards      = [file("dashboards/bat_runtime.json")]
 
   alert_rules            = local.alert_rules
+  alertmanager_slack_receivers = local.alertmanager_slack_receivers
   alertmanager_slack_url = local.infra_secrets["SLACK_WEBHOOK"]
 
   influxdb_service_plan = var.influxdb_service_plan
