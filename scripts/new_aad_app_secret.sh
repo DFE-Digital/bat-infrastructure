@@ -7,6 +7,7 @@ CLIENT_ID=${1:-}
 DISPLAY_NAME=${2:-}
 
 usage () {
+  echo "Generate service principal credentials json for current subscription"
   echo "Usage: ./new_aad_app_secret.sh <CLIENT_ID> <DISPLAY_NAME>"
 }
 
@@ -41,4 +42,5 @@ AZURE_CREDENTIALS='
   "tenantId": "'$TENANT_ID'"
 }'
 
+echo "Credentials to access subscription $(echo $AZ_ACCOUNT | jq -r .name):"
 echo $AZURE_CREDENTIALS | jq .
