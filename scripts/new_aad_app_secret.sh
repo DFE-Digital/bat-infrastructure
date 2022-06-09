@@ -6,13 +6,19 @@ CLIENT_ID=${1:-}
 # Description or friendly name for the secret
 DISPLAY_NAME=${2:-}
 
+usage () {
+  echo "Usage: ./new_aad_app_secret.sh <CLIENT_ID> <DISPLAY_NAME>"
+}
+
 if [[ -z "${CLIENT_ID}" ]]; then
   echo "CLIENT_ID Application (client) ID variable is not set"
+  usage
   exit 1
 fi
 
 if [[ -z "${DISPLAY_NAME}" ]]; then
   echo "DISPLAY_NAME variable is not set"
+  usage
   exit 1
 fi
 
