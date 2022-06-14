@@ -1,3 +1,12 @@
+# Resource group
+resource "azurerm_resource_group" "dns_zones" {
+  for_each = var.hosted_zone
+
+  name     = each.value.resource_group_name
+  location = "West Europe"
+  tags = each.value.tags
+}
+
 # Zone
 
 resource "azurerm_dns_zone" "dns_zone" {
@@ -5,13 +14,6 @@ resource "azurerm_dns_zone" "dns_zone" {
 
   name                = each.key
   resource_group_name = each.value.resource_group_name
-
-  tags = {
-    Environment = var.environment
-    Portfolio   = var.portfolio
-    Product     = var.product
-    Service     = var.service
-  }
 }
 
 # CAA record
