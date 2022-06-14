@@ -1,5 +1,5 @@
 # Resource group
-resource "azurerm_resource_group" "dns_zones" {
+resource "azurerm_resource_group" "dns_zone" {
   for_each = var.hosted_zone
 
   name     = each.value.resource_group_name
