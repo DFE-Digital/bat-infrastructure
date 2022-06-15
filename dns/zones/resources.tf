@@ -13,7 +13,7 @@ resource "azurerm_dns_zone" "dns_zone" {
   for_each = var.hosted_zone
 
   name                = each.key
-  resource_group_name = azurerm_resource_group.dns_zone[each.key]
+  resource_group_name = azurerm_resource_group.dns_zone[each.key].name
 }
 
 # CAA record
