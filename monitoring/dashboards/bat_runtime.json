@@ -224,13 +224,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(requests{app=\"teacher-training-api-prod\"}[$__rate_interval]))*60",
+          "expr": "sum(rate(requests{app=\"publish-teacher-training-prod\"}[$__rate_interval]))*60",
           "interval": "",
           "legendFormat": "All requests",
           "refId": "A"
         },
         {
-          "expr": "sum(rate(requests{app=\"teacher-training-api-prod\", status_range=\"5xx\"}[$__rate_interval]))*60",
+          "expr": "sum(rate(requests{app=\"publish-teacher-training-prod\", status_range=\"5xx\"}[$__rate_interval]))*60",
           "interval": "",
           "legendFormat": "5xx errors",
           "refId": "B"

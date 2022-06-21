@@ -38,8 +38,7 @@ $Metadata = @(
     @{ CfAppPrefix = "apply"; GitHubRepoName = "apply-for-teacher-training" },
     @{ CfAppPrefix = "find"; GitHubRepoName = "find-teacher-training" },
     @{ CfAppPrefix = "publish"; GitHubRepoName = "publish-teacher-training" },
-    @{ CfAppPrefix = "register"; GitHubRepoName = "register-trainee-teachers" },
-    @{ CfAppPrefix = "teacher"; GitHubRepoName = "teacher-training-api" }
+    @{ CfAppPrefix = "register"; GitHubRepoName = "register-trainee-teachers" }
 )
 
 cf target -s $CfSpace | Out-Null

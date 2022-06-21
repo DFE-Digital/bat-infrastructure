@@ -15,7 +15,7 @@ Useful in scenarios when there is a need to selectively deploy to environments d
  # Use the output value in a different step
  - run: echo ${{ steps.select-environments.outputs.environments }}
 ```
-Used in: [Find](https://github.com/DFE-Digital/find-teacher-training/blob/master/.github/workflows/deploy.yml#L29), [Publish](https://github.com/DFE-Digital/publish-teacher-training/blob/master/.github/workflows/deploy.yml#L29) & [Teacher Training API](https://github.com/DFE-Digital/teacher-training-api/blob/master/.github/workflows/deploy.yml#L29)
+Used in: [Find](https://github.com/DFE-Digital/find-teacher-training/blob/master/.github/workflows/deploy.yml#L29), [Publish](https://github.com/DFE-Digital/publish-teacher-training/blob/master/.github/workflows/deploy.yml#L29)
 
 ## Setup Cloud Foundry CLI
 Installs the Cloud Foundry CLI and logs the specified user into `CF_SPACE_NAME`.
