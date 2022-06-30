@@ -17,6 +17,7 @@ module "prometheus_all" {
   grafana_google_client_secret = local.infra_secrets["GRAFANA_GOOGLE_CLIENT_SECRET"]
   grafana_runtime_version      = "7.5.11"
   grafana_json_dashboards      = [file("dashboards/bat_runtime.json")]
+  grafana_anonymous_auth       = true
 
   alert_rules            = local.alert_rules
   alertmanager_slack_receivers = local.alertmanager_slack_receivers
