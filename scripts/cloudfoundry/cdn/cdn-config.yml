@@ -20,7 +20,6 @@ bat-qa:
     - qa.api.publish-teacher-training-courses.service.gov.uk
     - qa.publish-teacher-training-courses.service.gov.uk
     - audit.register-trainee-teachers.education.gov.uk
-    - qa2.publish-teacher-training-courses.service.gov.uk
     - traineeteacherportal-dv.education.gov.uk
 bat-staging:
   service: bat-cdn-staging
@@ -33,7 +32,6 @@ bat-staging:
     - pen.api.publish-teacher-training-courses.service.gov.uk
     - pen.publish-teacher-training-courses.service.gov.uk
     - staging.register-trainee-teachers.education.gov.uk
-    - staging2.publish-teacher-training-courses.service.gov.uk
     - traineeteacherportal-pp.education.gov.uk
 
 register-qa:
@@ -90,8 +88,6 @@ bat-prod:
     - sandbox.register-trainee-teachers.education.gov.uk
     - www.publish-teacher-training-courses.service.gov.uk
     - api.publish-teacher-training-courses.service.gov.uk
-    - sandbox2.publish-teacher-training-courses.service.gov.uk
-    - www2.publish-teacher-training-courses.service.gov.uk
     - traineeteacherportal.education.gov.uk
 git-assets-production:
   service: get-into-teaching-cdn-prod-assets
