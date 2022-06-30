@@ -54,7 +54,7 @@
       },
       "id": 9,
       "options": {
-        "content": "<h1 style=\"text-align:center;\">Teacher training API</h1>",
+        "content": "<h1 style=\"text-align:center;\">Publish teacher training</h1>",
         "mode": "html"
       },
       "pluginVersion": "7.5.11",
