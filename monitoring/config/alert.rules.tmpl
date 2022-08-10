@@ -89,7 +89,7 @@ groups:
 %{ for app_name, app_config in apps ~}
   - alert: Response-Times-${app_name}
     expr:  histogram_quantile(0.95, sum(rate(response_time_bucket{app="${app_name}", status_range="2xx"}[5m])) by (le)) > %{ if app_config.response_threshold == null }1%{ else }${app_config.response_threshold}%{ endif }
-    for: 5m
+    for: %{ if app_config.response_window == null }"5m"%{ else }${app_config.response_window}%{ endif }
     annotations:
       summary:     Slow running requests
       dashboard:   ${cfapps_dashboard_url}&var-Applications=${app_name}
