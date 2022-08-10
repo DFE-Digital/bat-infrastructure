@@ -9,6 +9,7 @@ variable "alertmanager_app_config" {
   type = map(
     object({
       response_threshold = optional(number)
+      response_window    = optional(string)
       receiver = optional(string)
     })
   )
