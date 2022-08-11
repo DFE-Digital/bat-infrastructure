@@ -21,6 +21,7 @@ bat-qa:
     - qa.publish-teacher-training-courses.service.gov.uk
     - audit.register-trainee-teachers.education.gov.uk
     - traineeteacherportal-dv.education.gov.uk
+    - qa2.find-postgraduate-teacher-training.service.gov.uk
 bat-staging:
   service: bat-cdn-staging
   headers: *all-headers
@@ -28,6 +29,7 @@ bat-staging:
     - staging.find-postgraduate-teacher-training.service.gov.uk
     - staging.api.publish-teacher-training-courses.service.gov.uk
     - staging.publish-teacher-training-courses.service.gov.uk
+    - staging2.find-postgraduate-teacher-training.service.gov.uk
     - pen.find-postgraduate-teacher-training.service.gov.uk
     - pen.api.publish-teacher-training-courses.service.gov.uk
     - pen.publish-teacher-training-courses.service.gov.uk
@@ -81,8 +83,10 @@ bat-prod:
   headers: *all-headers
   domain:
     - www.find-postgraduate-teacher-training.service.gov.uk
+    - www2.find-postgraduate-teacher-training.service.gov.uk
     - www.register-trainee-teachers.education.gov.uk
     - sandbox.find-postgraduate-teacher-training.service.gov.uk
+    - sandbox2.find-postgraduate-teacher-training.service.gov.uk
     - sandbox.api.publish-teacher-training-courses.service.gov.uk
     - sandbox.publish-teacher-training-courses.service.gov.uk
     - sandbox.register-trainee-teachers.education.gov.uk

@@ -65,7 +65,7 @@ Running the script with any of the above will print out the desired `cf update-s
 ```
 ./cdn.rb create git-staging
 
-cf create-service cdn-route cdn-route get-into-teaching-cdn-test -c '{"headers":["Accept","Authorization"],"domain":"staging-adviser-getintoteaching.education.gov.uk,staging-getintoteaching.education.gov.uk"}'-staging
+cf create-service cdn-route cdn-route get-into-teaching-cdn-test -c '{"headers":["Accept","Authorization"],"domain":"staging-adviser-getintoteaching.education.gov.uk,staging-getintoteaching.education.gov.uk"}'
 
 ```
 
@@ -74,8 +74,6 @@ cf create-service cdn-route cdn-route get-into-teaching-cdn-test -c '{"headers":
 ```
 ./cdn.rb update git-staging
 
-cf update-service get-into-teaching-cdn-test -c '{"headers":["Accept","Authorization"],"domain":"staging-adviser-getintoteaching.education.gov.uk,staging-getintoteaching.education.gov.uk"}'-staging
+cf update-service get-into-teaching-cdn-test -c '{"headers":["Accept","Authorization"],"domain":"staging-adviser-getintoteaching.education.gov.uk,staging-getintoteaching.education.gov.uk"}'
 
 ```
-
-
