@@ -55,6 +55,19 @@ dnsrecord-plan: dnsrecord-init
 dnsrecord-apply: dnsrecord-init
 	cd dns/records && terraform apply -var-file workspace-variables/${DNS_ZONE}_${DNS_ENV}.tfvars.json ${AUTO_APPROVE}
 
+sqlpad-init: set-azure-account
+	$(if $(or $(DISABLE_PASSCODE),$(PASSCODE)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
+	terraform -chdir=sqlpad init -backend-config workspace_variables/backend_${DEPLOY_ENV}.tfvars -upgrade -reconfigure
+
+sqlpad-plan: sqlpad-init
+	terraform -chdir=sqlpad plan -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
+
+sqlpad-apply: sqlpad-init
+	terraform -chdir=sqlpad apply -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
+
+sqlpad-destroy: sqlpad-init
+	terraform -chdir=sqlpad destroy -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
+
 .PHONY: install-fetch-config
 install-fetch-config: ## Install the fetch-config script, for viewing/editing secrets in Azure Key Vault
 	[ ! -f bin/fetch_config.rb ] \
