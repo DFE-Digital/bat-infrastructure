@@ -3,7 +3,7 @@ groups:
   rules:
 %{ for app_name, app_config in apps ~}
   - alert: High-CPU-${app_name}
-    expr: avg by ( app ) (cpu{app=~"${app_name}"}) > 50
+    expr: avg by ( app ) (cpu{app="${app_name}"}) > 50
     for: 5m
     annotations:
       summary:     ${app_name} High CPU Alert
@@ -20,7 +20,7 @@ groups:
   rules:
 %{ for app_name, app_config in apps ~}
   - alert: High-Memory-Utilisation-${app_name}
-    expr: avg by ( app ) (memory_utilization{app=~"${app_name}"}) > 60
+    expr: avg by ( app ) (memory_utilization{app="${app_name}"}) > 60
     for: 5m
     annotations:
       summary:     ${app_name} high memory utilization
@@ -37,7 +37,7 @@ groups:
   rules:
 %{ for app_name, app_config in apps ~}
   - alert: High-Disk-Utilisation-${app_name}
-    expr: avg by ( app ) ( disk_utilization{ app=~"${app_name}" }) > 60
+    expr: avg by ( app ) ( disk_utilization{ app="${app_name}" }) > 60
     for: 5m
     annotations:
       summary:     ${app_name} high disk utilization
@@ -54,7 +54,7 @@ groups:
   rules:
 %{ for app_name, app_config in apps ~}
   - alert: App-Crash-${app_name}
-    expr: rate(crash{app=~"${app_name}"}[1m])*60 > 1
+    expr: rate(crash{app="${app_name}"}[1m])*60 > 1
     for: 5m
     annotations:
       summary:     At least one instance of ${app_name} has crashed in the last 5 mins
@@ -105,7 +105,7 @@ groups:
   rules:
 %{ for redis_instance in alertable_redis_instances ~}
   - alert: Redis memory utilisation high (instance - ${redis_instance})
-    expr: (redis_memory_used_bytes{instance=~"${redis_instance}"} / redis_memory_max_bytes{instance=~"${redis_instance}"}) > 0.60
+    expr: (redis_memory_used_bytes{instance="${redis_instance}"} / redis_memory_max_bytes{instance="${redis_instance}"}) > 0.60
     for: 4m
     annotations:
       summary:     ${redis_instance} high memory utilization
