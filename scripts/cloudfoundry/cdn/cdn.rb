@@ -9,7 +9,12 @@ def usage(input)
     exit
 end
 
-input = YAML.load_file('cdn-config.yml')
+begin
+    # Required for Ruby 3.1 and above
+    input = YAML.load_file('cdn-config.yml', aliases: true)
+rescue ArgumentError
+    input = YAML.load_file('cdn-config.yml')
+end
 
 usage(input) if ARGV.empty?
 

@@ -68,7 +68,7 @@ se-staging:
 
 git-staging:
   service: get-into-teaching-cdn-test
-  headers: *headers
+  headers: *all-headers
   domain:
     - staging-adviser-getintoteaching.education.gov.uk
     - staging-getintoteaching.education.gov.uk
@@ -105,7 +105,7 @@ se-prod:
     - schoolexperience.education.gov.uk
 git-prod:
   service: get-into-teaching-cdn-prod
-  headers: *headers
+  headers: *all-headers
   domain:
     - adviser-getintoteaching.education.gov.uk
     - beta-adviser-getintoteaching.education.gov.uk
