@@ -1,5 +1,5 @@
 resource "cloudfoundry_app" "sqlpad" {
-  name         = local.app_name
+  name         = var.app_name
   docker_image = local.app_docker_image
   instances    = var.app_instances
   memory       = var.app_memory
@@ -18,16 +18,16 @@ resource "cloudfoundry_app" "sqlpad" {
 resource "cloudfoundry_route" "web_app_cloudapps_digital_route" {
   domain   = data.cloudfoundry_domain.london_cloudapps_digital.id
   space    = data.cloudfoundry_space.space.id
-  hostname = local.app_name
+  hostname = var.app_name
 }
 
 resource "cloudfoundry_service_instance" "postgres" {
-  name         = local.postgres_name
+  name         = var.postgres_name
   space        = data.cloudfoundry_space.space.id
   service_plan = data.cloudfoundry_service.postgres.service_plans["tiny-unencrypted-12"]
 }
 
 resource "cloudfoundry_service_key" "postgres_service_key" {
-  name             = "${local.postgres_name}-key"
+  name             = "${var.postgres_name}-key"
   service_instance = cloudfoundry_service_instance.postgres.id
 }
