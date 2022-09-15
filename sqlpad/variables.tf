@@ -2,11 +2,7 @@ variable "app_instances" { default = 1 }
 
 variable "app_memory" { default = 1024 }
 
-variable "sqlpad_admin" { default = "admin" }
-
 variable "app_name" {}
-
-variable "app_env" {}
 
 variable "postgres_name" {}
 
@@ -29,8 +25,8 @@ locals {
   infra_secrets              = yamldecode(data.azurerm_key_vault_secret.infra_secrets.value)
 
   app_env_variables = {
-    SQLPAD_ADMIN                  = var.sqlpad_admin
     SQLPAD_ADMIN_PASSWORD         = local.infra_secrets["SQLPAD_ADMIN_PASSWORD"]
+    SQLPAD_ADMIN                  = local.infra_secrets["SQLPAD_ADMIN_ID"]
     SQLPAD_BACKEND_DB_URI         = "${cloudfoundry_service_key.postgres_service_key.credentials.uri}?ssl=no-verify"
     SQLPAD_QUERY_RESULT_MAX_ROWS  = 100000
     SQLPAD_USERPASS_AUTH_DISABLED = true

@@ -30,6 +30,7 @@ Google sign-on has been configured for the application and only users invited by
 
 `var.sqlpad_admin` - Email address for the initial admin user, once logged in additional users can be configured.
 
+`sqlpad_admin_id` - in az keyvault
 `sqlpad_admin_password` - in az keyvault
 
 #### Google SSO (az keyvault)
