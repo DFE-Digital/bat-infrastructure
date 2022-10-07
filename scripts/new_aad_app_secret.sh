@@ -32,7 +32,7 @@ fi
 
 SUBSCRIPTION_ID="$(echo $AZ_ACCOUNT | jq -r .id)"
 TENANT_ID="$(echo $AZ_ACCOUNT | jq -r .tenantId)"
-CLIENT_SECRET="$(az ad app credential reset --id ${CLIENT_ID} --append --display-name ${DISPLAY_NAME} --only-show-errors | jq -r .password)"
+CLIENT_SECRET="$(az ad app credential reset --id ${CLIENT_ID} --append --display-name "${DISPLAY_NAME}" --only-show-errors | jq -r .password)"
 
 AZURE_CREDENTIALS='
 {
