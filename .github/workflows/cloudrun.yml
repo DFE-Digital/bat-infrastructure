@@ -1,0 +1,84 @@
+name: Cloud Run deployment
+
+on:
+  push:
+    branches:
+      - cloudrun-poc
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment to deploy, qa or prod
+        required: true
+        type: choice
+        options:
+          - qa
+        default: qa
+
+env:
+  DOCKER_IMAGE: gcr.io/cloudrun/hello
+#  DOCKER_IMAGE: eu.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}
+
+jobs:
+  deploycrun:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - id: auth
+      uses: google-github-actions/auth@v0
+      with:
+        credentials_json: '${{ secrets.POC_GOOGLE_CREDENTIALS }}'
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v0
+      with:
+        project_id: ${{ secrets.POC_GCP_PROJECT_ID }}
+
+#    - name: List instances
+#      run: gcloud run services list
+
+#    - name: Deploy Docker image
+#      run: gcloud run deploy bat-hello --image $DOCKER_IMAGE --region europe-west2 \
+#        --max-instances=2 --memory=512Mi --min-instances=0 --port=8080 --timeout=300 \
+#        --platform=managed --service-account=$SA_EMAIL --no-cpu-throttling
+
+    - id: 'deploy'
+      uses: 'google-github-actions/deploy-cloudrun@v0'
+      with:
+        service: 'bat-hello'
+        image: ${{ env.DOCKER_IMAGE }}
+        region: 'europe-west2'
+        flags: '--max-instances=2 --memory=512M --min-instances=0 --port=8080 --timeout=300 --service-account=${{ secrets.POC_SA_EMAIL }} --no-allow-unauthenticated'
+
+#    - name: Configure Docker
+#      run: gcloud auth configure-docker eu.gcr.io --quiet
+
+#    - name: Set Environment Variables (Push)
+#      if: github.event_name == 'push'
+#      run: |
+#        GIT_REF=${{ github.ref }}
+#        GIT_BRANCH=${GIT_REF##*/}
+#        echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV
+#        echo "IMAGE_TAG=$GITHUB_SHA" >> $GITHUB_ENV
+
+#    - name: Set Environment Variables (Pull request)
+#      if: github.event_name == 'pull_request'
+#      run: |
+        # This is the actual PR branch
+#        GIT_REF=${{ github.head_ref }}
+#        GIT_BRANCH=${GIT_REF##*/}
+#        echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV
+        # This is the latest commit on the actual PR branch
+#        echo "IMAGE_TAG=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
+
+#    - name: Set Environment variable
+#      run: |
+        # tag build to the review env for vars and secrets
+#        tf_vars_file=terraform/workspace_variables/review.tfvars.json
+#        echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
+#        echo "KEY_VAULT_INFRA_SECRET_NAME=$(jq -r '.key_vault_infra_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
+
+#    - name: 'Use output'
+#      run: 'curl "${{ steps.deploy.outputs.url }}"'
