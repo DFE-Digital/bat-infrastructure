@@ -1,9 +1,6 @@
 name: Cloud Run deployment
 
 on:
-  push:
-    branches:
-      - cloudrun-poc
   workflow_dispatch:
     inputs:
       environment:

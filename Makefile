@@ -19,6 +19,10 @@ register:
 	$(eval DNS_ZONE=register)
 	$(eval AZURE_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
 
+poc:
+	$(eval DEPLOY_ENV=qa)
+	$(eval AZURE_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
+
 set-azure-account:
 	az account set -s $(AZURE_SUBSCRIPTION)
 
@@ -68,6 +72,22 @@ sqlpad-apply: sqlpad-init
 sqlpad-destroy: sqlpad-init
 	terraform -chdir=sqlpad destroy -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
 
+crun-init: set-azure-account
+#	terraform -chdir=cloudrun init -upgrade -reconfigure
+	terraform -chdir=cloudrun init -backend-config workspace_variables/backend_${DEPLOY_ENV}.tfvars -upgrade -reconfigure
+
+crun-plan: crun-init
+	terraform -chdir=cloudrun plan -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
+
+crun-apply: crun-init
+	terraform -chdir=cloudrun apply -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
+
+crun-destroy: crun-init
+	terraform -chdir=cloudrun destroy -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
+
+crun-validate: crun-init
+	terraform -chdir=cloudrun validate
+
 .PHONY: install-fetch-config
 install-fetch-config: ## Install the fetch-config script, for viewing/editing secrets in Azure Key Vault
 	[ ! -f bin/fetch_config.rb ] \
@@ -89,5 +109,22 @@ print-infra-secrets: read-keyvault-config install-fetch-config set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_infra_secret_name} -f yaml
 
 validate-infra-secrets: read-keyvault-config install-fetch-config set-azure-account
+	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_infra_secret_name} -d quiet \
+		&& echo Data in ${key_vault_name}/${key_vault_infra_secret_name} looks valid
+
+read-keyvault-config-poc:
+	jq -r '.key_vault_name' cloudrun/workspace_variables/$(DEPLOY_ENV).tfvars.json
+	$(eval export key_vault_name=$(shell jq -r '.key_vault_name' cloudrun/workspace_variables/$(DEPLOY_ENV).tfvars.json))
+	$(eval key_vault_app_secret_name=$(shell jq -r '.key_vault_app_secret_name' cloudrun/workspace_variables/$(DEPLOY_ENV).tfvars.json))
+	$(eval key_vault_infra_secret_name=$(shell jq -r '.key_vault_infra_secret_name' cloudrun/workspace_variables/$(DEPLOY_ENV).tfvars.json))
+
+edit-infra-secrets-poc: read-keyvault-config-poc install-fetch-config set-azure-account
+	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_infra_secret_name} \
+		-e -d azure-key-vault-secret:${key_vault_name}/${key_vault_infra_secret_name} -f yaml -c
+
+print-infra-secrets-poc: read-keyvault-config-poc install-fetch-config set-azure-account
+	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_infra_secret_name} -f yaml
+
+validate-infra-secrets-poc: read-keyvault-config-poc install-fetch-config set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_infra_secret_name} -d quiet \
 		&& echo Data in ${key_vault_name}/${key_vault_infra_secret_name} looks valid
