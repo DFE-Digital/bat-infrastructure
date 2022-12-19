@@ -33,6 +33,7 @@ resource "azapi_resource" "aca" {
           external   = each.value.ingress_enabled
           targetPort = each.value.ingress_enabled ? each.value.containerPort : null
         }
+        secrets = try(each.value.secrets, [])
       }
       template = {
         containers = [
@@ -43,6 +44,7 @@ resource "azapi_resource" "aca" {
               cpu    = each.value.cpu_requests
               memory = each.value.mem_requests
             }
+            env = try(each.value.env_vars, [])
           }
         ]
         scale = {
