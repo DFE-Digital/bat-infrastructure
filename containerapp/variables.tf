@@ -4,15 +4,15 @@ variable "location" {
   description = "Desired Azure Region"
 }
 
-variable "backend_resource_group_name" {
-  type = string
-}
-
 variable "resource_group_name" {
   type = string
 }
 
-variable "log_analytics_workspace_name" {
+variable "aca_resource_group_name" {
+  type = string
+}
+
+variable "aca_log_analytics_workspace_name" {
   type = string
 }
 
@@ -56,3 +56,5 @@ variable "container_apps" {
       mem_requests    = "1.0Gi"
   }]
 }
+
+variable azure_credentials { default = null }

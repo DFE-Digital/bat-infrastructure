@@ -3,5 +3,5 @@ data "azurerm_resource_group" "group" {
 }
 
 data "azurerm_resource_group" "backend_resource_group_name" {
-  name = var.backend_resource_group_name
+  name = local.backend_resource_group_name
 }

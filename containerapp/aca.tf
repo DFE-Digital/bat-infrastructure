@@ -1,5 +1,5 @@
 resource "azapi_resource" "aca_env" {
-  type      = "Microsoft.App/connectedEnvironments@2022-03-01"
+  type      = "Microsoft.App/managedEnvironments@2022-06-01-preview"
   parent_id = azurerm_resource_group.app_group.id
   location  = azurerm_resource_group.app_group.location
   name      = var.aca_environment_name
@@ -20,7 +20,7 @@ resource "azapi_resource" "aca_env" {
 
 resource "azapi_resource" "aca" {
   for_each = { for ca in var.container_apps: ca.name => ca}
-  type = "Microsoft.App/containerApps@2022-03-01"
+  type = "Microsoft.App/containerApps@2022-06-01-preview"
   parent_id = azurerm_resource_group.app_group.id
   location = azurerm_resource_group.app_group.location
   name = each.value.name
