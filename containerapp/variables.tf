@@ -54,7 +54,18 @@ variable "container_apps" {
       max_replicas    = 2
       cpu_requests    = 0.5
       mem_requests    = "1.0Gi"
+    },
+    {
+      image           = "mcr.microsoft.com/azuredocs/containerapps-helloworld"
+      name            = "simple-hello-world-container"
+      tag             = "latest"
+      containerPort   = 80
+      ingress_enabled = true
+      min_replicas    = 0
+      max_replicas    = 2
+      cpu_requests    = 0.25
+      mem_requests    = "0.5Gi"
   }]
 }
 
-variable azure_credentials { default = null }
+variable "azure_credentials" { default = null }

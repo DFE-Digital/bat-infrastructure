@@ -19,28 +19,28 @@ resource "azapi_resource" "aca_env" {
 }
 
 resource "azapi_resource" "aca" {
-  for_each = { for ca in var.container_apps: ca.name => ca}
-  type = "Microsoft.App/containerApps@2022-06-01-preview"
+  for_each  = { for ca in var.container_apps : ca.name => ca }
+  type      = "Microsoft.App/containerApps@2022-06-01-preview"
   parent_id = azurerm_resource_group.app_group.id
-  location = azurerm_resource_group.app_group.location
-  name = each.value.name
+  location  = azurerm_resource_group.app_group.location
+  name      = each.value.name
 
   body = jsonencode({
-    properties: {
+    properties : {
       managedEnvironmentId = azapi_resource.aca_env.id
       configuration = {
         ingress = {
-          external = each.value.ingress_enabled
-          targetPort = each.value.ingress_enabled?each.value.containerPort: null
+          external   = each.value.ingress_enabled
+          targetPort = each.value.ingress_enabled ? each.value.containerPort : null
         }
       }
       template = {
         containers = [
           {
-            name = "main"
+            name  = "main"
             image = "${each.value.image}:${each.value.tag}"
             resources = {
-              cpu = each.value.cpu_requests
+              cpu    = each.value.cpu_requests
               memory = each.value.mem_requests
             }
           }
