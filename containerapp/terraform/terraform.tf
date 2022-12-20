@@ -12,6 +12,7 @@ terraform {
     }
   }
   backend "azurerm" {
+    container_name = "tsc-tfstate"
   }
 }
 

@@ -2,7 +2,7 @@ resource "azapi_resource" "aca_env" {
   type      = "Microsoft.App/managedEnvironments@2022-06-01-preview"
   parent_id = azurerm_resource_group.app_group.id
   location  = azurerm_resource_group.app_group.location
-  name      = var.aca_environment_name
+  name      = local.aca_environment_name
   tags      = data.azurerm_resource_group.backend_resource_group_name.tags
 
   body = jsonencode({
