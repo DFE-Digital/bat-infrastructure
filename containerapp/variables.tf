@@ -31,41 +31,10 @@ variable "container_apps" {
     max_replicas    = number
     cpu_requests    = number
     mem_requests    = string
+    secrets         = any
+    env_vars        = any
   }))
-
-  default = [{
-    image           = "thorstenhans/gopher"
-    name            = "herogopher"
-    tag             = "hero"
-    containerPort   = 80
-    ingress_enabled = true
-    min_replicas    = 1
-    max_replicas    = 2
-    cpu_requests    = 0.5
-    mem_requests    = "1.0Gi"
-    },
-    {
-      image           = "thorstenhans/gopher"
-      name            = "devilgopher"
-      tag             = "devil"
-      containerPort   = 80
-      ingress_enabled = true
-      min_replicas    = 1
-      max_replicas    = 2
-      cpu_requests    = 0.5
-      mem_requests    = "1.0Gi"
-    },
-    {
-      image           = "mcr.microsoft.com/azuredocs/containerapps-helloworld"
-      name            = "simple-hello-world-container"
-      tag             = "latest"
-      containerPort   = 80
-      ingress_enabled = true
-      min_replicas    = 0
-      max_replicas    = 2
-      cpu_requests    = 0.25
-      mem_requests    = "0.5Gi"
-  }]
+  default = []
 }
 
 variable "azure_credentials" { default = null }
