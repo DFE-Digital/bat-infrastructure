@@ -7,6 +7,7 @@ locals {
     "${var.resource_prefix}-tsc-${var.environment}-cae" :
     "${var.resource_prefix}cae-tsc-${var.environment}"
   )
+
   aca_resource_group_name = (
     var.cip_tenant ?
     "${var.resource_prefix}-tsc-ca-${var.environment}-rg" :
@@ -15,7 +16,7 @@ locals {
 
   aca_log_analytics_workspace_name = (
     var.cip_tenant ?
-    "${var.resource_prefix}-tsc-ca-${var.environment}-law" :
-    "${var.resource_prefix}law-tsc-ca-${var.environment}"
+    "${var.resource_prefix}-tsc-${var.environment}-caelaw" :
+    "${var.resource_prefix}caelaw-tsc-${var.environment}"
   )
 }

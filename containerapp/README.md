@@ -6,22 +6,19 @@ https://www.thorsten-hans.com/deploy-azure-container-apps-with-terraform/
 
 ## Installation
 
+Install Terraform 1.3.6
+`brew install tfenv`
+`tfenv install 1.3.6`
+`tfenve use 1.3.6`
+
+### Set Azure Subscription
+
+`az login` to an Azure subscription you can create resources in and update the AZ_SUBSCRIPTION value in the `poc.mk` file with the subscription name
+
 ### Create Terraform Backend
-pwsh
+Create the backend resource group, storage account and key vault
+Execute `make poc deploy-azure-resources AUTO_APPROVE=1`
 
-#### If you need some existing tags
-$rg = az group show -n s121d01-apply-rg |  ConvertFrom-Json
-$tags = $rg.tags
-
-$backend = Get-Content ./terraform/config/qa_backend.tfvars | ConvertFrom-StringData
-az group create -n $backend.resource_group_name -l westeurope
-az storage account create -n $backend.storage_account_name -g $backend.resource_group_name
-az storage container create -n $backend.container_name --account-name $backend.storage_account_name
-
-### User configuration
-
-cd terraform
-terraform init -reconfigure -backend-config=config/qa_backend.tfvars
-terraform plan -var-file=config/qa.tfvars.json -var-file=config/qa_backend.tfvars
-
-### Required terraform variables
+### Deploy Container Environment & Apps
+Add details to container_apps object in poc.tfvars.json to create more containers
+Execute `make poc terraform-apply`
