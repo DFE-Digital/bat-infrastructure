@@ -14,18 +14,6 @@ variable "location" {
   description = "Desired Azure Region"
 }
 
-# variable "aca_resource_group_name" {
-#   type = string
-# }
-
-# variable "aca_log_analytics_workspace_name" {
-#   type = string
-# }
-
-# variable "aca_environment_name" {
-#   type = string
-# }
-
 variable "container_apps" {
   type = list(object({
     name            = string
@@ -35,10 +23,12 @@ variable "container_apps" {
     ingress_enabled = bool
     min_replicas    = number
     max_replicas    = number
+    scale_rules     = any
     cpu_requests    = number
     mem_requests    = string
     secrets         = any
     env_vars        = any
+    probes          = any
   }))
   default = []
 }

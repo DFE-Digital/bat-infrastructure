@@ -45,11 +45,13 @@ resource "azapi_resource" "aca" {
               memory = each.value.mem_requests
             }
             env = try(each.value.env_vars, [])
+            probes = try(each.value.probes, [])
           }
         ]
         scale = {
           minReplicas = each.value.min_replicas
           maxReplicas = each.value.max_replicas
+          rules = try(each.value.scale_rules, [])
         }
       }
     }
