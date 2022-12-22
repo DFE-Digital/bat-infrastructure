@@ -1,6 +1,9 @@
 poc:
 	$(eval include config/poc.mk)
 
+demo:
+	$(eval include config/demo.mk)
+
 set-azure-account:
 	az account set -s ${AZ_SUBSCRIPTION}
 
@@ -9,7 +12,7 @@ terraform-init: set-azure-account
 		-backend-config=resource_group_name=${RESOURCE_GROUP_NAME} \
 		-backend-config=storage_account_name=${STORAGE_ACCOUNT_NAME} \
 		-backend-config=key=${ENVIRONMENT}.tfstate
-	$(eval TF_VARS=-var environment=${ENVIRONMENT} -var resource_group_name=${RESOURCE_GROUP_NAME} -var resource_prefix=${RESOURCE_PREFIX})
+	$(eval TF_VARS=-var environment=${ENVIRONMENT} -var resource_group_name=${RESOURCE_GROUP_NAME} -var resource_prefix=${RESOURCE_PREFIX} -var config_short=${CONFIG_SHORT})
 
 terraform-plan: terraform-init
 	terraform -chdir=terraform plan -var-file config/${CONFIG}.tfvars.json ${TF_VARS}

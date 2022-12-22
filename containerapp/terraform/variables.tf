@@ -1,6 +1,7 @@
 # Set in config mk file and passed by Makefile
 variable "environment" {}
 variable "resource_prefix" {}
+variable "config_short" {}
 variable "resource_group_name" {
   type = string
 }

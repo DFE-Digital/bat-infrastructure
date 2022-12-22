@@ -23,7 +23,9 @@ Create the backend resource group, storage account and key vault
 
 Execute `make poc deploy-azure-resources AUTO_APPROVE=1`
 
-## Deploy Container Environment & Apps
+## Manage Container Environment & Apps
 Add details to container_apps object in poc.tfvars.json to create more containers
 
-Execute `make poc terraform-apply`
+Create: `make poc terraform-apply`
+
+Destroy: `make poc terraform-destroy`
