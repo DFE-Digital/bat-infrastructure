@@ -107,12 +107,6 @@ git-prod:
     - beta-adviser-getintoteaching.education.gov.uk
     - getintoteaching.education.gov.uk
     - beta-getintoteaching.education.gov.uk
-apply-staging:
-  service: apply-cdn-staging
-  headers: *apply-headers
-  domain:
-    - staging.apply-for-teacher-training.service.gov.uk
-    - staging.apply-for-teacher-training.education.gov.uk
 apply-prod:
   service: apply-cdn-prod
   headers: *apply-headers
@@ -130,7 +124,6 @@ bat-assets-staging:
   service: bat-cdn-assets-staging
   cookies: false
   domain:
-    - staging-assets.apply-for-teacher-training.service.gov.uk
     - staging-assets.find-postgraduate-teacher-training.service.gov.uk
 bat-assets-prod:
   service: bat-cdn-assets-prod
