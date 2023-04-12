@@ -113,8 +113,6 @@ apply-prod:
   domain:
     - www.apply-for-teacher-training.service.gov.uk
     - www.apply-for-teacher-training.education.gov.uk
-    - sandbox.apply-for-teacher-training.service.gov.uk
-    - sandbox.apply-for-teacher-training.education.gov.uk
 bat-assets-qa:
   service: bat-cdn-assets-qa
   cookies: false
@@ -130,7 +128,6 @@ bat-assets-prod:
   cookies: false
   domain:
     - assets.apply-for-teacher-training.service.gov.uk
-    - sandbox-assets.apply-for-teacher-training.service.gov.uk
     - assets.find-postgraduate-teacher-training.service.gov.uk
     - sandbox-assets.find-postgraduate-teacher-training.service.gov.uk
 tra-production:
