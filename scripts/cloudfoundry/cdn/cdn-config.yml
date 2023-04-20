@@ -5,12 +5,6 @@ headers: &headers
   - Accept
   - Authorization
 
-apply-headers: &apply-headers
-  - Accept
-  - Authorization
-  - Referer
-  - User-Agent
-
 bat-qa:
   service: bat-cdn-qa
   headers: *all-headers
@@ -107,12 +101,6 @@ git-prod:
     - beta-adviser-getintoteaching.education.gov.uk
     - getintoteaching.education.gov.uk
     - beta-getintoteaching.education.gov.uk
-apply-prod:
-  service: apply-cdn-prod
-  headers: *apply-headers
-  domain:
-    - www.apply-for-teacher-training.service.gov.uk
-    - www.apply-for-teacher-training.education.gov.uk
 bat-assets-qa:
   service: bat-cdn-assets-qa
   cookies: false
@@ -127,7 +115,6 @@ bat-assets-prod:
   service: bat-cdn-assets-prod
   cookies: false
   domain:
-    - assets.apply-for-teacher-training.service.gov.uk
     - assets.find-postgraduate-teacher-training.service.gov.uk
     - sandbox-assets.find-postgraduate-teacher-training.service.gov.uk
 tra-production:
