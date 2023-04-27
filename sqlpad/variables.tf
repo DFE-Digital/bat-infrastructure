@@ -29,7 +29,7 @@ locals {
     SQLPAD_ADMIN                  = local.infra_secrets["SQLPAD_ADMIN_ID"]
     SQLPAD_BACKEND_DB_URI         = "${cloudfoundry_service_key.postgres_service_key.credentials.uri}?ssl=no-verify"
     SQLPAD_QUERY_RESULT_MAX_ROWS  = 100000
-    SQLPAD_USERPASS_AUTH_DISABLED = true
+    SQLPAD_USERPASS_AUTH_DISABLED = false
     PUBLIC_URL                    = "https://${cloudfoundry_route.web_app_cloudapps_digital_route.endpoint}"
     SQLPAD_GOOGLE_CLIENT_ID       = local.infra_secrets["SQLPAD_GOOGLE_CLIENT_ID"]
     SQLPAD_GOOGLE_CLIENT_SECRET   = local.infra_secrets["SQLPAD_GOOGLE_CLIENT_SECRET"]
