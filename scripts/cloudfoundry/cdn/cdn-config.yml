@@ -13,7 +13,6 @@ bat-qa:
     - qa.register-trainee-teachers.education.gov.uk
     - qa.api.publish-teacher-training-courses.service.gov.uk
     - qa.publish-teacher-training-courses.service.gov.uk
-    - audit.register-trainee-teachers.education.gov.uk
     - traineeteacherportal-dv.education.gov.uk
 bat-staging:
   service: bat-cdn-staging
@@ -39,13 +38,6 @@ register-staging:
   headers: *all-headers
   domain:
     - staging.register-trainee-teachers.service.gov.uk
-
-register-pen:
-  service: register-cdn-pen
-  headers: *all-headers
-  domain:
-    - pen.register-trainee-teachers.service.gov.uk
-    - pen.register-trainee-teachers.education.gov.uk
 
 register-prod:
   service: register-cdn-prod
