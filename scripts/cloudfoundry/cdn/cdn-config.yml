@@ -23,14 +23,7 @@ bat-staging:
     - pen.find-postgraduate-teacher-training.service.gov.uk
     - pen.api.publish-teacher-training-courses.service.gov.uk
     - pen.publish-teacher-training-courses.service.gov.uk
-    - staging.register-trainee-teachers.education.gov.uk
     - traineeteacherportal-pp.education.gov.uk
-
-register-staging:
-  service: register-cdn-staging
-  headers: *all-headers
-  domain:
-    - staging.register-trainee-teachers.service.gov.uk
 
 register-prod:
   service: register-cdn-prod
