@@ -5,3 +5,6 @@
 .terraform.lock.hcl
 bin/fetch_config.rb
 .vscode/
+bin/konduit.sh
+bin/terrafile
+sqlpad-aks/vendor/
