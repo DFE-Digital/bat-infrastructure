@@ -12,7 +12,6 @@ bat-qa:
     - qa.find-postgraduate-teacher-training.service.gov.uk
     - qa.api.publish-teacher-training-courses.service.gov.uk
     - qa.publish-teacher-training-courses.service.gov.uk
-    - traineeteacherportal-dv.education.gov.uk
 bat-staging:
   service: bat-cdn-staging
   headers: *all-headers
@@ -23,7 +22,6 @@ bat-staging:
     - pen.find-postgraduate-teacher-training.service.gov.uk
     - pen.api.publish-teacher-training-courses.service.gov.uk
     - pen.publish-teacher-training-courses.service.gov.uk
-    - traineeteacherportal-pp.education.gov.uk
 
 se-staging:
   service: schoolexperience-cdn-test
@@ -53,7 +51,6 @@ bat-prod:
     - sandbox.publish-teacher-training-courses.service.gov.uk
     - www.publish-teacher-training-courses.service.gov.uk
     - api.publish-teacher-training-courses.service.gov.uk
-    - traineeteacherportal.education.gov.uk
 git-assets-production:
   service: get-into-teaching-cdn-prod-assets
   cookies: false
