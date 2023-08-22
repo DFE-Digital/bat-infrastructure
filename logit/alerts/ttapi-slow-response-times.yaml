@@ -1,0 +1,38 @@
+name: "TTAPI Slow Response Alert"
+index: logstash-*
+type: metric_aggregation
+
+generate_kibana_link: true
+# kibana_url: "https://kibana.logit.io/app/kibana"
+# use_kibana4_dashboard: "https://kibana.logit.io/app/kibana#/dashboard/507c77a0-361c-11ea-9292-79ffe3d4210b"
+use_kibana4_dashboard: "https://kibana.logit.io/app/kibana#/dashboard/67ac6840-649c-11eb-adfb-17215ab8c90f"
+doc_type: _doc
+metric_agg_key: duration_ms
+metric_agg_type: avg
+max_threshold: 3000
+buffer_time:
+  seconds: 60
+
+exponential_realert:
+  hours: 1
+
+alert_text_type: alert_text_only
+alert_text: |
+  Average response time of '{average_time:.0f}ms' recorded at '{timestamp}' exceeds threshold of '{threshold}ms' over '{measure_time}'.
+
+  <{kibana_link}|View dashboard for {timestamp}>
+
+alert_text_kw:
+  max_threshold: threshold
+  buffer_time: measure_time
+  metric_duration_ms_avg: average_time
+  kibana_link: kibana_link
+  "@timestamp": timestamp
+
+alert:
+- slack
+
+slack_webhook_url: "https://hooks.slack.com/services/ChangeThisToTheCorrectURL"
+slack_title: "TTAPI Slow Response Time"
+slack_username_override: "Teacher Training API Slow Response Times"
+slack_channel_override: "#twd_publish_tech"

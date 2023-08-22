@@ -1,0 +1,48 @@
+# Rule name, must be unique
+name: Apply LogIt Alert
+
+# Type of alert.
+type: flatline
+
+# Index to search, wildcard supported
+index: logstash-*
+
+# A list of Elasticsearch filters used for find events
+# These filters are joined with AND and nested in a filtered query
+# For more info: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html
+filter:
+- query:
+    query_string:
+      query: "application: apply-prod"
+      default_field: application
+- query:
+    query_string:
+      query: "type: application"
+      default_field: type
+
+timeframe:
+  hours: 1
+
+# Alert when there less than 100 results
+threshold: 100
+
+use_count_query: true
+doc_type: _doc
+
+alert_text_type: alert_text_only
+
+alert_text: |
+  Less than 100 results found for `apply-prod` in the last one hour.
+
+alert:
+- "email"
+- "slack"
+
+# a list of email addresses to send alerts to
+email:
+- "distribution.group@education.gov.uk"
+
+slack_webhook_url: "https://hooks.slack.com/services/ChangeThisToTheCorrectURL"
+slack_title: "Logit Alert"
+slack_username_override: "Apply LogIt Alert"
+slack_channel_override: "#teacher-services-infra"
