@@ -5,24 +5,6 @@ headers: &headers
   - Accept
   - Authorization
 
-bat-qa:
-  service: bat-cdn-qa
-  headers: *all-headers
-  domain:
-    - qa.find-postgraduate-teacher-training.service.gov.uk
-    - qa.api.publish-teacher-training-courses.service.gov.uk
-    - qa.publish-teacher-training-courses.service.gov.uk
-bat-staging:
-  service: bat-cdn-staging
-  headers: *all-headers
-  domain:
-    - staging.find-postgraduate-teacher-training.service.gov.uk
-    - staging.api.publish-teacher-training-courses.service.gov.uk
-    - staging.publish-teacher-training-courses.service.gov.uk
-    - pen.find-postgraduate-teacher-training.service.gov.uk
-    - pen.api.publish-teacher-training-courses.service.gov.uk
-    - pen.publish-teacher-training-courses.service.gov.uk
-
 se-staging:
   service: schoolexperience-cdn-test
   headers: *all-headers
@@ -41,16 +23,6 @@ git-assets-staging:
   cookies: false
   domain:
     - assets-staging-getintoteaching.education.gov.uk
-bat-prod:
-  service: bat-cdn-prod
-  headers: *all-headers
-  domain:
-    - www.find-postgraduate-teacher-training.service.gov.uk
-    - sandbox.find-postgraduate-teacher-training.service.gov.uk
-    - sandbox.api.publish-teacher-training-courses.service.gov.uk
-    - sandbox.publish-teacher-training-courses.service.gov.uk
-    - www.publish-teacher-training-courses.service.gov.uk
-    - api.publish-teacher-training-courses.service.gov.uk
 git-assets-production:
   service: get-into-teaching-cdn-prod-assets
   cookies: false
@@ -69,22 +41,6 @@ git-prod:
     - beta-adviser-getintoteaching.education.gov.uk
     - getintoteaching.education.gov.uk
     - beta-getintoteaching.education.gov.uk
-bat-assets-qa:
-  service: bat-cdn-assets-qa
-  cookies: false
-  domain:
-    - qa-assets.find-postgraduate-teacher-training.service.gov.uk
-bat-assets-staging:
-  service: bat-cdn-assets-staging
-  cookies: false
-  domain:
-    - staging-assets.find-postgraduate-teacher-training.service.gov.uk
-bat-assets-prod:
-  service: bat-cdn-assets-prod
-  cookies: false
-  domain:
-    - assets.find-postgraduate-teacher-training.service.gov.uk
-    - sandbox-assets.find-postgraduate-teacher-training.service.gov.uk
 tra-production:
   service: teacher-qualifications-api-cdn-production
   headers: *all-headers
