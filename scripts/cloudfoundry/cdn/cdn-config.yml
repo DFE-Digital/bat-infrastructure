@@ -5,19 +5,13 @@ headers: &headers
   - Accept
   - Authorization
 
-se-staging:
-  service: schoolexperience-cdn-test
-  headers: *all-headers
-  domain:
-    - schoolexperience-staging.education.gov.uk
-
 git-staging:
   service: get-into-teaching-cdn-test
   headers: *all-headers
   domain:
     - staging-adviser-getintoteaching.education.gov.uk
     - staging-getintoteaching.education.gov.uk
-    - staging-schoolexperience.education.gov.uk
+
 git-assets-staging:
   service: get-into-teaching-cdn-test-assets
   cookies: false
@@ -28,11 +22,7 @@ git-assets-production:
   cookies: false
   domain:
     - app-assets-getintoteaching.education.gov.uk
-se-prod:
-  service: schoolexperience-cdn-prod2
-  headers: *all-headers
-  domain:
-    - schoolexperience.education.gov.uk
+
 git-prod:
   service: get-into-teaching-cdn-prod
   headers: *all-headers
