@@ -1,6 +1,0 @@
-all-headers: &all-headers
-  - "*"
-
-headers: &headers
-  - Accept
-  - Authorization
