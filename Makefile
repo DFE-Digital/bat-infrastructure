@@ -2,16 +2,9 @@ ifndef VERBOSE
 .SILENT:
 endif
 
-TERRAFILE_VERSION=0.8
 ARM_TEMPLATE_TAG=1.1.0
 RG_TAGS={"Product" : "Teacher services cloud"}
 SERVICE_SHORT=sqlpad
-
-install-terrafile: ## Install terrafile to manage terraform modules
-	[ ! -f bin/terrafile ] \
-		&& curl -sL https://github.com/coretech/terrafile/releases/download/v${TERRAFILE_VERSION}/terrafile_${TERRAFILE_VERSION}_$$(uname)_x86_64.tar.gz \
-		| tar xz -C ./bin terrafile \
-		|| true
 
 install-konduit: ## Install the konduit script, for accessing backend services
 	[ ! -f bin/konduit.sh ] \
@@ -40,8 +33,11 @@ install-fetch-config: ## Install the fetch-config script, for viewing/editing se
 		&& chmod +x bin/fetch_config.rb \
 		|| true
 
-sqlpad-init-aks: install-terrafile set-azure-account
-	./bin/terrafile -p sqlpad-aks/vendor/modules -f sqlpad-aks/config/$(CONFIG)_Terrafile
+sqlpad-init-aks: set-azure-account
+	rm -rf sqlpad-aks/vendor/modules/aks
+	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git sqlpad-aks/vendor/modules/aks
+
+
 	terraform -chdir=sqlpad-aks init -upgrade -reconfigure \
 		-backend-config=resource_group_name=${RESOURCE_GROUP_NAME} \
 		-backend-config=storage_account_name=${STORAGE_ACCOUNT_NAME} \
